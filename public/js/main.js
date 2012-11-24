@@ -15,7 +15,7 @@ $(document).ready(function(){
     // shader_loader.load(['rain_vs', 'rain_fs']);
     shader_loader.load(['sprite_vs', 'sprite_fs', 'rain_vs', 'rain_fs', 
         'background_fs', 'background_vs', 'laser_fs', 'laser_vs', 'blur_fs', 'blur_vs',
-        'composite_vs', 'composite_fs', 'rttShaderFs', 'rttShaderVs']);
+        'rttShaderFs', 'rttShaderVs']);
 
     $(document).on('shaders_loaded', function(e, shaders){
         var engine = new Engine($('canvas'));
@@ -40,10 +40,6 @@ $(document).ready(function(){
         var blur_shaders = {
             vs: shaders['blur_vs.glsl'].text(),
             fs: shaders['blur_fs.glsl'].text()
-        };
-        var composite_shaders = {
-            vs: shaders['composite_vs.glsl'].text(),
-            fs: shaders['composite_fs.glsl'].text()
         };
 
         var gl = engine.get_gl();

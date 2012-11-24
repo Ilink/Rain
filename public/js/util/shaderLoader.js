@@ -10,7 +10,7 @@ function Shader_loader(){
 	function load(name){
 		$.ajax({
 			type: 'get',
-			url: 'js/particles/shaders/'+name,
+			url: 'js/shaders/'+name,
 			success: function(data){
 				collect(name, data);
 			}
