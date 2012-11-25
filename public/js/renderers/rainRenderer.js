@@ -11,6 +11,9 @@ function RainRenderer(gl, shaders, rttShaders){
     var textureCoordAttribute;
     var vertColor;
     var position;
+    var rttUSampler;
+    var rttATextureCoord;
+    var rttAPosition;
     var gradient_coords =  [
         0.0, 0.0,
         0.0, 1.0,
@@ -20,8 +23,7 @@ function RainRenderer(gl, shaders, rttShaders){
     var fbo = new Fbo(256);
     var rttProgram = buildShaderProgram(rttShaders);
     
-    // this stays per-renderer
-    function setup_shaders() {
+    function setup_main_shader() {
         position = gl.getAttribLocation(self.shaderProgram, "position");
         if(position > -1)
             gl.enableVertexAttribArray(position);
@@ -33,6 +35,20 @@ function RainRenderer(gl, shaders, rttShaders){
         vertColor = gl.getAttribLocation(self.shaderProgram, "vertColor");
         if(vertColor > -1)
             gl.enableVertexAttribArray(vertColor);
+    }
+
+    function setup_rtt_shader(){
+        rttAPosition = gl.getAttribLocation(rttProgram, "position");
+        if(rttAPosition > -1)
+            gl.enableVertexAttribArray(rttAPosition);
+
+        rttATextureCoord = gl.getAttribLocation(rttProgram, "aTextureCoord");
+        if(rttATextureCoord > -1)
+            gl.enableVertexAttribArray(rttATextureCoord);
+
+        rttUSampler = gl.getUniformLocation(rttProgram, "uSampler");
+        if(rttUSampler > -1)
+            gl.enableVertexAttribArray(rttUSampler);
     }
 
     // this stays per-renderer
@@ -59,11 +75,10 @@ function RainRenderer(gl, shaders, rttShaders){
         rtt.draw();
     }
 
-    setup_shaders();
-    var rttSampler = gl.getUniformLocation(rttProgram, "uSampler");
-    rttTextureCoordAttribute = gl.getAttribLocation(rttProgram, "aTextureCoord");
-    gl.enableVertexAttribArray(rttTextureCoordAttribute);
-    var rtt = new Rtt(fbo.glTexture, rttSampler, position);
+    setup_main_shader();
+    setup_rtt_shader();
+    // var rtt = new Rtt(fbo.glTexture, rttSampler, position);
+    var rtt = new Sprite(fbo.glTexture, geo_builder.fullScreenQuad, rttUSampler, rttATextureCoord, rttAPosition);
 
     this.render = function(time, dim, pMatrix, pMatrixInv) {
         gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);

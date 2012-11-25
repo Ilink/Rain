@@ -1,11 +1,10 @@
 /*
 Texture
 
-For now this just does Quads
+If the 'source' attribute is not a string, we assume it is a webgl texture.
 */
 
-// todo: rename to SpriteTexture
-function Texture(name, sampler, uvAttr){
+function Texture(source, sampler, uvAttr){
     var self = this;
 
     function handleLoadedTexture(texture) {
@@ -36,7 +35,11 @@ function Texture(name, sampler, uvAttr){
     ];
     this.uvBuffer = makeBuffer(self.coords, 2);
     this.glTexture;
-    initGlTexture(name);
+    if(typeof source === 'string'){
+        initGlTexture(source);
+    } else {
+        self.glTexture = source;
+    }
 
     this.set = function(){
         gl.bindBuffer(gl.ARRAY_BUFFER, self.uvBuffer.glBuffer);
