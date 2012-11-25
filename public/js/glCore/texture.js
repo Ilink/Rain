@@ -5,7 +5,7 @@ For now this just does Quads
 */
 
 // todo: rename to SpriteTexture
-function Texture(gl, name, sampler, attr){
+function Texture(name, sampler, attr){
     var self = this;
 
     function handleLoadedTexture(texture) {

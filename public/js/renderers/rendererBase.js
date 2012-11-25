@@ -34,7 +34,7 @@ RendererBase.prototype.addGeo = function(verts, mat, textureName){
     geo.trans = mat;
     
     if(typeof textureName !== 'undefined'){
-        geo.texture = new Texture(self.gl, textureName, self.uSampler, self.aTextureCoord);
+        geo.texture = new Texture(textureName, self.uSampler, self.aTextureCoord);
     }
     this.geo.push(geo);
     return geo;

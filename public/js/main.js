@@ -42,7 +42,8 @@ $(document).ready(function(){
             fs: shaders['blur_fs.glsl'].text()
         };
 
-        var gl = engine.get_gl();
+        // global
+        window.gl = engine.get_gl();
         
         var boundaries = engine.get_boundaries();
         var boundaries_far = engine.get_boundaries(-10);
