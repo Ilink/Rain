@@ -1,7 +1,7 @@
 <script id="rain_fs" type="x-shader/fragment"> 
 
 	precision mediump float;
-	uniform float time;
+	// uniform float time;
 	uniform vec2 resolution;
 	// varying vec3 pos;
 	varying vec2 vertColorOut;

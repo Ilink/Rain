@@ -14,14 +14,16 @@ function RainRenderer(gl, shaders, rttShaders){
     var rttUSampler;
     var rttATextureCoord;
     var rttAPosition;
-    var gradient_coords =  [
+    var gradientCoords =  [
         0.0, 0.0,
         0.0, 1.0,
         1.0, 0.0,
         1.0, 1.0
     ];
+    var gradientBuffer = makeBuffer(gradientCoords, 2);
+
     var fbo = new Fbo(1024);
-    var rttProgram = buildShaderProgram(rttShaders);
+    // var rttProgram = buildShaderProgram(rttShaders);
     
     function setup_main_shader() {
         position = gl.getAttribLocation(self.shaderProgram, "position");
@@ -67,12 +69,17 @@ function RainRenderer(gl, shaders, rttShaders){
 
             gl.bindBuffer(gl.ARRAY_BUFFER, geo.glBuffer);
             gl.vertexAttribPointer(position, geo.itemSize, gl.FLOAT, false, 0, 0);
+
+            gl.bindBuffer(gl.ARRAY_BUFFER, gradientBuffer.glBuffer);
+            gl.vertexAttribPointer(vertColor, gradientBuffer.itemSize, gl.FLOAT, false, 0, 0);
+
             gl.drawArrays(gl.TRIANGLE_STRIP, 0, geo.numItems);
         });
     }
 
     setup_main_shader();
-    setup_rtt_shader();
+    // setup_rtt_shader();
+    console.log(position, textureCoordAttribute, vertColor);
     // var rtt = new Rtt(fbo.glTexture, rttSampler, position);
     var rtt = new Sprite(fbo.glTexture, geo_builder.fullScreenQuad, rttUSampler, rttATextureCoord, rttAPosition);
 
@@ -80,14 +87,14 @@ function RainRenderer(gl, shaders, rttShaders){
         gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
         
         fbo.activate();
-        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+        // gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
         build(dim, pMatrix, pMatrixInv);
         fbo.deactivate();
         // gl.useProgram(rttProgram);
         // rtt.draw();
-        gl.useProgram(self.shaderProgram);
-        build(dim, pMatrix, pMatrixInv);
+        // gl.useProgram(self.shaderProgram);
+        // build(dim, pMatrix, pMatrixInv);
     };
 }
 

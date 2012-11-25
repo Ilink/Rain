@@ -21,10 +21,6 @@ function SpriteRenderer(gl, shaders, textures){
         textureCoordAttribute = gl.getAttribLocation(self.shaderProgram, "aTextureCoord");
         if(textureCoordAttribute > -1)
             gl.enableVertexAttribArray(textureCoordAttribute);
-
-        vertColor = gl.getAttribLocation(self.shaderProgram, "vertColor");
-        if(vertColor > -1)
-            gl.enableVertexAttribArray(vertColor);
     }
 
     // this stays per-renderer
