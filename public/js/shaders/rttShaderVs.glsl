@@ -2,8 +2,6 @@
  
 	attribute vec3 position;
 	attribute vec2 aTextureCoord;
-	uniform mat4 uMVMatrix;
-
 	varying vec2 vTextureCoord;
 
 	void main(void) {
