@@ -1,5 +1,5 @@
 <script id="sprite_fs" type="x-shader/fragment">
-	precision highp float;
+	precision mediump float;
 
 	uniform sampler2D uSampler;
 	varying vec2 vTextureCoord;

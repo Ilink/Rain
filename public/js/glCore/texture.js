@@ -42,8 +42,11 @@ function Texture(source, sampler, uvAttr){
     }
 
     this.set = function(){
+        // set texture coordinates
         gl.bindBuffer(gl.ARRAY_BUFFER, self.uvBuffer.glBuffer);
         gl.vertexAttribPointer(uvAttr, self.uvBuffer.itemSize, gl.FLOAT, false, 0, 0);
+
+        // set texture
         gl.activeTexture(gl.TEXTURE0);
         gl.bindTexture(gl.TEXTURE_2D, self.glTexture);
         gl.uniform1i(sampler, 0);

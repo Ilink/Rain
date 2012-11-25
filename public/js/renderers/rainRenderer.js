@@ -20,7 +20,7 @@ function RainRenderer(gl, shaders, rttShaders){
         1.0, 0.0,
         1.0, 1.0
     ];
-    var fbo = new Fbo(256);
+    var fbo = new Fbo(1024);
     var rttProgram = buildShaderProgram(rttShaders);
     
     function setup_main_shader() {
@@ -53,7 +53,6 @@ function RainRenderer(gl, shaders, rttShaders){
 
     // this stays per-renderer
     function build(dim, pMatrix, pMatrixInv){
-        fbo.activate();
         $.each(self.geo, function(i, geo){
             mat4.identity(mvMatrix); // reset the position for each piece of geometry
             mat4.translate(mvMatrix, geo.trans);
@@ -70,9 +69,6 @@ function RainRenderer(gl, shaders, rttShaders){
             gl.vertexAttribPointer(position, geo.itemSize, gl.FLOAT, false, 0, 0);
             gl.drawArrays(gl.TRIANGLE_STRIP, 0, geo.numItems);
         });
-        fbo.deactivate();
-        gl.useProgram(rttProgram);
-        rtt.draw();
     }
 
     setup_main_shader();
@@ -82,6 +78,15 @@ function RainRenderer(gl, shaders, rttShaders){
 
     this.render = function(time, dim, pMatrix, pMatrixInv) {
         gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+        
+        fbo.activate();
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+        build(dim, pMatrix, pMatrixInv);
+        fbo.deactivate();
+        // gl.useProgram(rttProgram);
+        // rtt.draw();
+        gl.useProgram(self.shaderProgram);
         build(dim, pMatrix, pMatrixInv);
     };
 }

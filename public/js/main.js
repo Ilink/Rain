@@ -105,11 +105,14 @@ $(document).ready(function(){
         }
 
         var timeline = new Timeline(function(dt){
+
             for(var i = 0; i < geo_arr.length; i++){
+                // geo_arr[i].trans[1] = -0.5;
+
                 if(geo_arr[i].trans[1] < -4){
-                    geo_arr[i].trans[1] = boundaries.topleft[1]+1;
+                    geo_arr[i].trans[1] = boundaries.topleft[1]+1; // move them back to the top
                 } else
-                geo_arr[i].trans[1] -= geo_arr[i].vel * dt;
+                    geo_arr[i].trans[1] -= geo_arr[i].vel * dt;
             }
         });
         timeline.start();
