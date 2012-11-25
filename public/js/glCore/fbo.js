@@ -1,4 +1,4 @@
-function Fbo(gl, size){
+function Fbo(size){
 	var self = this;
 	var texture;
 	var depthBuffer;

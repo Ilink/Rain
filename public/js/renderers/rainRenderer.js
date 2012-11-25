@@ -17,8 +17,8 @@ function RainRenderer(gl, shaders, rttShaders){
         1.0, 0.0,
         1.0, 1.0
     ];
-    var fbo = new Fbo(gl, 256);
-    var rttProgram = buildShaderProgram(gl, rttShaders);
+    var fbo = new Fbo(256);
+    var rttProgram = buildShaderProgram(rttShaders);
     
     // this stays per-renderer
     function setup_shaders() {
@@ -63,7 +63,7 @@ function RainRenderer(gl, shaders, rttShaders){
     var rttSampler = gl.getUniformLocation(rttProgram, "uSampler");
     rttTextureCoordAttribute = gl.getAttribLocation(rttProgram, "aTextureCoord");
     gl.enableVertexAttribArray(rttTextureCoordAttribute);
-    var rtt = new Rtt(gl, fbo.glTexture, rttSampler, position);
+    var rtt = new Rtt(fbo.glTexture, rttSampler, position);
 
     this.render = function(time, dim, pMatrix, pMatrixInv) {
         gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);

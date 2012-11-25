@@ -34,3 +34,16 @@ var geo_builder = {
         1,     1,     0.0  // top right
     ]
 }
+
+function makeGeoBuffer(verts, itemSize){
+    var buffer = {};
+    var glBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, glBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(verts), gl.STATIC_DRAW);
+    buffer.itemSize = itemSize;
+    buffer.numItems = verts.length / 3;
+    buffer.glBuffer = glBuffer;
+    return buffer;
+}
+
+var makeBuffer = makeGeoBuffer; // alias

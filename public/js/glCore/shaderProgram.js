@@ -3,7 +3,7 @@ Shader
 Should be able to build a shader - specifying the source and compiling it.
 */
 
-function getShader(gl, shaderSrc, type){
+function getShader(shaderSrc, type){
     var shader;
     if(type.toLowerCase() === 'fs'){
         shader = gl.createShader(gl.FRAGMENT_SHADER);
@@ -22,9 +22,9 @@ function getShader(gl, shaderSrc, type){
     return shader;
 }
 
-function buildShaderProgram(gl, shaderSrcPair){
-	var vs = getShader(gl, shaderSrcPair.vs, 'vs');
-	var fs = getShader(gl, shaderSrcPair.fs, 'fs');
+function buildShaderProgram(shaderSrcPair){
+	var vs = getShader(shaderSrcPair.vs, 'vs');
+	var fs = getShader(shaderSrcPair.fs, 'fs');
 
 	shaderProgram = gl.createProgram();
 	gl.attachShader(shaderProgram, vs);

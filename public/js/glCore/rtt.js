@@ -6,13 +6,11 @@ Generates a mipmap for the texture.
 Displays the texture on a fullscreen quad
 */
 
-
-// function Rtt(gl, texture, textureBuffer, sampler, attr){
-function Rtt(gl, texture, sampler, attr){
+function Rtt(texture, sampler, attr){
 	var self = this;
 	// var quad = new Geo(gl, geo_builder.fullScreenQuad);
 	// var quad = new Buffer(gl, geo_builder.fullScreenQuad, 3, attr);
-	var quad = new Geo(gl, geo_builder.fullScreenQuad);
+	var quadBuffer = makeGeoBuffer(geo_builder.fullScreenQuad, 3);
 
 	var UVcoords = [
 	    0.0, 0.0,
@@ -52,8 +50,8 @@ function Rtt(gl, texture, sampler, attr){
 		gl.vertexAttribPointer(attr, self.glUVBuffer.itemSize, gl.FLOAT, false, 0, 0);
 
 		// draw
-		gl.bindBuffer(gl.ARRAY_BUFFER, quad.glBuffer);
-		gl.vertexAttribPointer(attr, quad.itemSize, gl.FLOAT, false, 0, 0);
-		gl.drawArrays(gl.TRIANGLE_STRIP, 0, quad.numItems);
+		gl.bindBuffer(gl.ARRAY_BUFFER, quadBuffer);
+		gl.vertexAttribPointer(attr, quadBuffer.itemSize, gl.FLOAT, false, 0, 0);
+		gl.drawArrays(gl.TRIANGLE_STRIP, 0, quadBuffer.numItems);
 	}
 }

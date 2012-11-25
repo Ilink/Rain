@@ -9,7 +9,7 @@ function RendererBase(args){
     if(typeof args !== 'undefined'){
         console.log(args)
         this.gl = args.gl;
-        this.shaderProgram = buildShaderProgram(this.gl, args.shaders);
+        this.shaderProgram = buildShaderProgram(args.shaders);
         this.geo = [];
         this.resolution = this.gl.getUniformLocation(this.shaderProgram, 'resolution');
         this.uPMatrix = this.gl.getUniformLocation(this.shaderProgram, 'uPMatrix');
@@ -30,7 +30,7 @@ RendererBase.prototype.__setDefaultUniforms = function(program, pMatrix, mvMatri
 
 RendererBase.prototype.addGeo = function(verts, mat, textureName){
     var self = this;
-    var geo = new Geo(self.gl, verts);
+    var geo = makeGeoBuffer(verts, 3);
     geo.trans = mat;
     
     if(typeof textureName !== 'undefined'){
