@@ -27,7 +27,8 @@
 
 	    // can we scale blur size based upon size in terms of clip coords?
 	    vec4 sum = vec4(0.0);
-	    float blurSize = 0.005;
+	    // float blurSize = 0.005;
+	    float blurSize = 1.0 / 1024.0; // texture size
 	    sum += texture2D(uSampler, vTextureCoord - 4.0 * blurSize) * 0.05;
 	    sum += texture2D(uSampler, vTextureCoord - 3.0 * blurSize) * 0.09;
 	    sum += texture2D(uSampler, vTextureCoord - 2.0 * blurSize) * 0.12;

@@ -21,28 +21,26 @@ function RainRenderer(gl, shaders, rttShaders){
         1.0, 0.0,
         1.0, 1.0
     ];
+    var laserShaderInputs = {};
+    var rttShaderInputs = {};
+    var rttSize = 1024;
     var gradientBuffer = makeBuffer(gradientCoords, 2);
 
-    var fbo = new Fbo(1024);
+    var fbo = new Fbo(rttSize);
     var rttProgram = buildShaderProgram(rttShaders);
     
     function setup_main_shader() {
-        position = gl.getAttribLocation(self.shaderProgram, "position");
+        laserShaderInputs.position = gl.getAttribLocation(self.shaderProgram, "position");
         if(position > -1)
-            gl.enableVertexAttribArray(position);
+            gl.enableVertexAttribArray(laserShaderInputs.position);
 
-        // using vertColor/gradientCoords for this - they are the same. how nice.
-        // textureCoordAttribute = gl.getAttribLocation(self.shaderProgram, "aTextureCoord");
-        // if(textureCoordAttribute > -1)
-        //     gl.enableVertexAttribArray(textureCoordAttribute);
-
-        vertColor = gl.getAttribLocation(self.shaderProgram, "vertColor");
+        laserShaderInputs.vertColor = gl.getAttribLocation(self.shaderProgram, "vertColor");
         if(vertColor > -1)
-            gl.enableVertexAttribArray(vertColor);
+            gl.enableVertexAttribArray(laserShaderInputs.vertColor);
 
-        blurSampler = gl.getUniformLocation(self.shaderProgram, "blurSampler");
+        laserShaderInputs.blurSampler = gl.getUniformLocation(self.shaderProgram, "blurSampler");
         if(blurSampler > -1)
-            gl.enableVertexAttribArray(blurSampler);
+            gl.enableVertexAttribArray(laserShaderInputs.blurSampler);
     }
 
     function setup_rtt_shader(){
@@ -74,10 +72,10 @@ function RainRenderer(gl, shaders, rttShaders){
             }
 
             gl.bindBuffer(gl.ARRAY_BUFFER, geo.glBuffer);
-            gl.vertexAttribPointer(position, geo.itemSize, gl.FLOAT, false, 0, 0);
+            gl.vertexAttribPointer(laserShaderInputs.position, geo.itemSize, gl.FLOAT, false, 0, 0);
 
             gl.bindBuffer(gl.ARRAY_BUFFER, gradientBuffer.glBuffer);
-            gl.vertexAttribPointer(vertColor, gradientBuffer.itemSize, gl.FLOAT, false, 0, 0);
+            gl.vertexAttribPointer(laserShaderInputs.vertColor, gradientBuffer.itemSize, gl.FLOAT, false, 0, 0);
 
             gl.drawArrays(gl.TRIANGLE_STRIP, 0, geo.numItems);
         });
@@ -87,7 +85,7 @@ function RainRenderer(gl, shaders, rttShaders){
     setup_rtt_shader();
     console.log(position, this.uSampler, vertColor);
     var rtt = new Sprite(fbo.glTexture, geo_builder.fullScreenQuad, rttUSampler, rttATextureCoord, rttAPosition);
-    var blurResult = new Texture(fbo.glTexture, blurSampler, vertColor);
+    var blurResult = new Texture(fbo.glTexture, laserShaderInputs.blurSampler, vertColor);
 
     this.render = function(time, dim, pMatrix, pMatrixInv) {
         gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
