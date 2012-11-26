@@ -48,25 +48,25 @@ $(document).ready(function(){
         var boundaries = engine.get_boundaries();
         var boundaries_far = engine.get_boundaries(-10);
 
-        // var background_renderer = new BgRenderer(gl, background_shaders);
-        // // The shader for this does not use the perpsective matrix, so we just need clip space coords
-        // var background_rect = [
-        //     -1,   -1,     0.0, // bot left
-        //     -1,    1,     0.0, // top left
-        //     1,    -1,     0.0, // bot right
-        //     1,     1,     0.0  // top right
-        // ];
-        // background_renderer.addGeo(background_rect, [0,0,-40]);
-        // engine.add_renderer(background_renderer);
+        var background_renderer = new BgRenderer(gl, background_shaders);
+        // The shader for this does not use the perpsective matrix, so we just need clip space coords
+        var background_rect = [
+            -1,   -1,     0.0, // bot left
+            -1,    1,     0.0, // top left
+            1,    -1,     0.0, // bot right
+            1,     1,     0.0  // top right
+        ];
+        background_renderer.addGeo(background_rect, [0,0,-40]);
+        engine.add_renderer(background_renderer);
 
-        // var squid_renderer = new SpriteRenderer(gl, squid_shaders);
-        // engine.add_renderer(squid_renderer);
-        // tmat = [-1.5, -2.0, -7.0];
-        // var squid_sprite = squid_renderer.addGeo(
-        //     geo_builder.rectangle(1.0, 1.0), 
-        //     tmat, 
-        //     'squid_large.png'
-        // );
+        var squid_renderer = new SpriteRenderer(gl, squid_shaders);
+        engine.add_renderer(squid_renderer);
+        tmat = [-1.5, -2.0, -7.0];
+        var squid_sprite = squid_renderer.addGeo(
+            geo_builder.rectangle(1.0, 1.0), 
+            tmat, 
+            'squid_large.png'
+        );
 
         // Rain ------------------------------------------------------------/
 

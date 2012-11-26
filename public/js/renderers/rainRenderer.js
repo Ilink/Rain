@@ -14,6 +14,7 @@ function RainRenderer(gl, shaders, rttShaders){
     var rttUSampler;
     var rttATextureCoord;
     var rttAPosition;
+    var blurSampler;
     var gradientCoords =  [
         0.0, 0.0,
         0.0, 1.0,
@@ -38,6 +39,10 @@ function RainRenderer(gl, shaders, rttShaders){
         vertColor = gl.getAttribLocation(self.shaderProgram, "vertColor");
         if(vertColor > -1)
             gl.enableVertexAttribArray(vertColor);
+
+        blurSampler = gl.getUniformLocation(self.shaderProgram, "blurSampler");
+        if(blurSampler > -1)
+            gl.enableVertexAttribArray(blurSampler);
     }
 
     function setup_rtt_shader(){
@@ -80,8 +85,9 @@ function RainRenderer(gl, shaders, rttShaders){
 
     setup_main_shader();
     setup_rtt_shader();
-    console.log(position, textureCoordAttribute, vertColor);
+    console.log(position, this.uSampler, vertColor);
     var rtt = new Sprite(fbo.glTexture, geo_builder.fullScreenQuad, rttUSampler, rttATextureCoord, rttAPosition);
+    var blurResult = new Texture(fbo.glTexture, blurSampler, vertColor);
 
     this.render = function(time, dim, pMatrix, pMatrixInv) {
         gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);

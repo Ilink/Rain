@@ -16,7 +16,9 @@
 		float green = position.y;
 		float blue = position.y;
 		float alpha = sin(3.0*position.y);
-		gl_FragColor = vec4(0.0, 0.0, 0.0, alpha);
+		// gl_FragColor = vec4(0.0, 0.0, 0.0, alpha);
+	    gl_FragColor = texture2D(uSampler, vec2(vertColorOut.s, vertColorOut.t));
+		
 	}
 
 </script>

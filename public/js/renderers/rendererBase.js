@@ -16,6 +16,7 @@ function RendererBase(args){
         this.uMVMatrix = this.gl.getUniformLocation(this.shaderProgram, 'uMVMatrix');
         this.uSampler = this.gl.getUniformLocation(this.shaderProgram, 'uSampler');
         this.aTextureCoord = this.gl.getAttribLocation(self.shaderProgram, "aTextureCoord");
+        console.log(this.uSampler);
     }
 }
 
