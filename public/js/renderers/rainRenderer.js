@@ -31,30 +31,30 @@ function RainRenderer(gl, shaders, rttShaders){
     
     function setup_main_shader() {
         laserShaderInputs.position = gl.getAttribLocation(self.shaderProgram, "position");
-        if(position > -1)
+        if(laserShaderInputs.position > -1)
             gl.enableVertexAttribArray(laserShaderInputs.position);
 
         laserShaderInputs.vertColor = gl.getAttribLocation(self.shaderProgram, "vertColor");
-        if(vertColor > -1)
+        if(laserShaderInputs.vertColor > -1)
             gl.enableVertexAttribArray(laserShaderInputs.vertColor);
 
         laserShaderInputs.blurSampler = gl.getUniformLocation(self.shaderProgram, "blurSampler");
-        if(blurSampler > -1)
+        if(laserShaderInputs.blurSampler > -1)
             gl.enableVertexAttribArray(laserShaderInputs.blurSampler);
     }
 
     function setup_rtt_shader(){
-        rttAPosition = gl.getAttribLocation(rttProgram, "position");
-        if(rttAPosition > -1)
-            gl.enableVertexAttribArray(rttAPosition);
+        rttShaderInputs.position = gl.getAttribLocation(rttProgram, "position");
+        if(rttShaderInputs.position > -1)
+            gl.enableVertexAttribArray(rttShaderInputs.position);
 
-        rttATextureCoord = gl.getAttribLocation(rttProgram, "aTextureCoord");
-        if(rttATextureCoord > -1)
-            gl.enableVertexAttribArray(rttATextureCoord);
+        rttShaderInputs.textureCoord = gl.getAttribLocation(rttProgram, "aTextureCoord");
+        if(rttShaderInputs.textureCoord > -1)
+            gl.enableVertexAttribArray(rttShaderInputs.textureCoord);
 
-        rttUSampler = gl.getUniformLocation(rttProgram, "uSampler");
-        if(rttUSampler > -1)
-            gl.enableVertexAttribArray(rttUSampler);
+        rttShaderInputs.sampler = gl.getUniformLocation(rttProgram, "uSampler");
+        if(rttShaderInputs.sampler > -1)
+            gl.enableVertexAttribArray(rttShaderInputs.sampler);
     }
 
     // this stays per-renderer
@@ -83,8 +83,7 @@ function RainRenderer(gl, shaders, rttShaders){
 
     setup_main_shader();
     setup_rtt_shader();
-    console.log(position, this.uSampler, vertColor);
-    var rtt = new Sprite(fbo.glTexture, geo_builder.fullScreenQuad, rttUSampler, rttATextureCoord, rttAPosition);
+    var rtt = new Sprite(fbo.glTexture, geo_builder.fullScreenQuad, rttShaderInputs.sampler, rttShaderInputs.textureCoord, rttShaderInputs.position);
     var blurResult = new Texture(fbo.glTexture, laserShaderInputs.blurSampler, vertColor);
 
     this.render = function(time, dim, pMatrix, pMatrixInv) {
