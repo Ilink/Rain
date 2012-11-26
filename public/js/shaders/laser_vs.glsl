@@ -6,9 +6,7 @@
 	uniform mat4 uMVMatrix;
 	uniform mat4 uPMatrix;
 
-	// attribute vec2 quadCoordIn;
-	// varying vec2 quadCoord;
-	varying vec2 vertColorOut;
+	varying vec2 vertColorOut; // these happen to also be texture coordinates!
 
 	void main(void) {
 	    gl_Position = uPMatrix * uMVMatrix * vec4(position, 1.0);

@@ -30,9 +30,10 @@ function RainRenderer(gl, shaders, rttShaders){
         if(position > -1)
             gl.enableVertexAttribArray(position);
 
-        textureCoordAttribute = gl.getAttribLocation(self.shaderProgram, "aTextureCoord");
-        if(textureCoordAttribute > -1)
-            gl.enableVertexAttribArray(textureCoordAttribute);
+        // using vertColor/gradientCoords for this - they are the same. how nice.
+        // textureCoordAttribute = gl.getAttribLocation(self.shaderProgram, "aTextureCoord");
+        // if(textureCoordAttribute > -1)
+        //     gl.enableVertexAttribArray(textureCoordAttribute);
 
         vertColor = gl.getAttribLocation(self.shaderProgram, "vertColor");
         if(vertColor > -1)
