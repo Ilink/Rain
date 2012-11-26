@@ -25,6 +25,7 @@
 	    // 		vTextureCoord.y + step));
 	    // gl_FragColor = (sample0 + sample1 + sample2 + sample3) / 4.0;
 
+	    // can we scale blur size based upon size in terms of clip coords?
 	    vec4 sum = vec4(0.0);
 	    float blurSize = 0.005;
 	    sum += texture2D(uSampler, vTextureCoord - 4.0 * blurSize) * 0.05;
