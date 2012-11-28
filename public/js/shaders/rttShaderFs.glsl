@@ -8,7 +8,7 @@
 
     void main(void) {
         float z = gl_FragCoord.z / gl_FragCoord.w;
-        float zFactor = z * 2.0;
+        float zFactor = z * 3.0;
 
         // vec4 sample0,
         //   sample1,

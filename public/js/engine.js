@@ -72,7 +72,7 @@ function Engine(canvas){
     });
 
     this.start = function(){
-        gl.clearColor(1.0, 1.0, 1.0, 1.0);
+        gl.clearColor(1.0, 1.0, 1.0, 0.0);
         // gl.clearColor(0.0,0.0, 0.0, 1.0);
         gl.disable(gl.DEPTH_TEST);
         gl.enable(gl.BLEND);
