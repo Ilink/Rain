@@ -80,7 +80,7 @@ $(document).ready(function(){
 
         Also, 1.5 is the top of the screen, hooray
         */
-        var x_max = 3;
+        var x_max = 30;
         var x_min = 0;
         var z_min = -5.0;
         var z_max = -1;

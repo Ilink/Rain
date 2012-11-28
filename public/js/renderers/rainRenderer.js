@@ -55,9 +55,10 @@ function RainRenderer(gl, shaders, rttShaders){
         rttShaderInputs.sampler = gl.getUniformLocation(rttProgram, "uSampler");
         if(rttShaderInputs.sampler > -1)
             gl.enableVertexAttribArray(rttShaderInputs.sampler);
+
+        rttShaderInputs.textureSize = gl.getUniformLocation(rttProgram, "textureSize");
     }
 
-    // this stays per-renderer
     function build(dim, pMatrix, pMatrixInv){
         $.each(self.geo, function(i, geo){
             mat4.identity(mvMatrix); // reset the position for each piece of geometry
@@ -76,6 +77,8 @@ function RainRenderer(gl, shaders, rttShaders){
 
             gl.bindBuffer(gl.ARRAY_BUFFER, gradientBuffer.glBuffer);
             gl.vertexAttribPointer(laserShaderInputs.vertColor, gradientBuffer.itemSize, gl.FLOAT, false, 0, 0);
+
+            gl.uniform1i(rttShaderInputs.textureSize, rttSize);
 
             gl.drawArrays(gl.TRIANGLE_STRIP, 0, geo.numItems);
         });
