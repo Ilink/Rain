@@ -8,7 +8,7 @@
 
     void main(void) {
         float z = gl_FragCoord.z / gl_FragCoord.w;
-        float zFactor = z * 3.0;
+        float zFactor = z * 2.0;
 
         // vec4 sample0,
         //   sample1,
@@ -33,6 +33,7 @@
         // can we scale blur size based upon size in terms of clip coords?
         vec4 sum = vec4(0.0);
         // float blurSize = 0.005;
+        // float blurSize = 1.0 / (1024.0 / zFactor); // texture size
         float blurSize = 1.0 / (1024.0 / zFactor); // texture size
         sum += texture2D(uSampler, vTextureCoord - 4.0 * blurSize) * 0.05;
         sum += texture2D(uSampler, vTextureCoord - 3.0 * blurSize) * 0.09;

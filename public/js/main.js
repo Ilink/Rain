@@ -80,7 +80,7 @@ $(document).ready(function(){
 
         Also, 1.5 is the top of the screen, hooray
         */
-        var x_max = 30;
+        var x_max = 100;
         var x_min = 0;
         var z_min = -5.0;
         var z_max = -1;
@@ -96,7 +96,7 @@ $(document).ready(function(){
             
             tmat = [x, boundaries.topleft[1], z];
             // var _geo = rainRenderer.add_geo(geo_builder.rectangle(0.008, 0.09), tmat);
-            var _geo = rainRenderer.addGeo(geo_builder.rectangle(0.8, 0.09), tmat);
+            var _geo = rainRenderer.addGeo(geo_builder.rectangle(0.02, 0.8), tmat);
 
             _geo.vel = Math.random()/150.0 + 0.0001;
             geo_arr.push(_geo);

@@ -63,7 +63,6 @@ function RainRenderer(gl, shaders, rttShaders){
         $.each(self.geo, function(i, geo){
             mat4.identity(mvMatrix); // reset the position for each piece of geometry
             mat4.translate(mvMatrix, geo.trans);
-            mat4.rotate(mvMatrix, 90, [0,0,1], mvMatrix);
 
             self.__setDefaultUniforms(self.shaderProgram, pMatrix, mvMatrix, dim);
 
@@ -100,7 +99,7 @@ function RainRenderer(gl, shaders, rttShaders){
         gl.useProgram(rttProgram);
         rtt.draw();
         gl.useProgram(self.shaderProgram);
-        build(dim, pMatrix, pMatrixInv);
+        // build(dim, pMatrix, pMatrixInv);
     };
 }
 
