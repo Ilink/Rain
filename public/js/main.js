@@ -52,7 +52,8 @@ $(document).ready(function(){
         var boundaries = engine.get_boundaries();
         var boundaries_far = engine.get_boundaries(-10);
 
-        var paticlesRenderer = new ParticlesRenderer(particle_shaders);
+        var particlesRenderer = new ParticlesRenderer(particle_shaders);
+        engine.add_renderer(particlesRenderer);
 
         var background_renderer = new BgRenderer(gl, background_shaders);
         // The shader for this does not use the perpsective matrix, so we just need clip space coords

@@ -21,7 +21,7 @@ function ParticlesRenderer(shaders){
     }
 
     function build(dim, pMatrix, pMatrixInv){
-        gl.uniform2f(resolution, dim.width, dim.height);
+        // gl.uniform2f(resolution, dim.width, dim.height);
         particles.draw();
     }
 
@@ -33,5 +33,5 @@ function ParticlesRenderer(shaders){
     };
 }
 
-BgRenderer.prototype = new RendererBase();
-BgRenderer.prototype.constructor = BgRenderer;
+ParticlesRenderer.prototype = new RendererBase();
+ParticlesRenderer.prototype.constructor = ParticlesRenderer;
