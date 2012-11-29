@@ -19,6 +19,8 @@ function BgRenderer(gl, shaders){
     ];
     var resolution = gl.getUniformLocation(self.shaderProgram, 'resolution');
 
+    var particles = new Particles([1,2,3,3,4,5]);
+    
     function setup_shaders() {
         position = gl.getAttribLocation(self.shaderProgram, "position");
         if(position > -1)
@@ -34,6 +36,7 @@ function BgRenderer(gl, shaders){
             gl.vertexAttribPointer(position, geo.itemSize, gl.FLOAT, false, 0, 0);
             gl.drawArrays(gl.TRIANGLE_STRIP, 0, geo.numItems);
         });
+        particles.draw();
     }
 
     var gradientBuffer = new Buffer(gl, gradient_coords, 2, position);
