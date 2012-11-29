@@ -15,7 +15,7 @@ $(document).ready(function(){
     // shader_loader.load(['rain_vs', 'rain_fs']);
     shader_loader.load(['sprite_vs', 'sprite_fs', 'rain_vs', 'rain_fs', 
         'background_fs', 'background_vs', 'laser_fs', 'laser_vs', 'blur_fs', 'blur_vs',
-        'rttShaderFs', 'rttShaderVs']);
+        'rttShaderFs', 'rttShaderVs', 'particles_vs', 'particles_fs']);
 
     $(document).on('shaders_loaded', function(e, shaders){
         var engine = new Engine($('canvas'));
@@ -41,12 +41,18 @@ $(document).ready(function(){
             vs: shaders['blur_vs.glsl'].text(),
             fs: shaders['blur_fs.glsl'].text()
         };
+        var particle_shaders = {
+            vs: shaders['particles_vs.glsl'].text(),
+            fs: shaders['particles_fs.glsl'].text()
+        };
 
         // global
         window.gl = engine.get_gl();
         
         var boundaries = engine.get_boundaries();
         var boundaries_far = engine.get_boundaries(-10);
+
+        var paticlesRenderer = new particlesRenderer(particle_shaders);
 
         var background_renderer = new BgRenderer(gl, background_shaders);
         // The shader for this does not use the perpsective matrix, so we just need clip space coords
