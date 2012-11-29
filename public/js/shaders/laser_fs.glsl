@@ -42,11 +42,13 @@
 
 		vec4 final_color;
 		// final_color.rgba = vec4(red, gree, blue, 1.0);
-		final_color.rgba = vec4(0.0, 0.3, 1.0, 1.0);
-		final_color.rgba = vec4(1.0, 0.3, 1.0, 1.0);
+		// final_color.rgba = vec4(0.0, 0.3, 1.0, 1.0);
+		final_color.rgba = vec4(0.3, 0.3, 0.5, 0.8);
+
 		// gl_FragColor = mix(fog_color, final_color, fogFactor );
 		vec4 fogMix = mix(fog_color, sample, fogFactor);
-		gl_FragColor = fogMix;
+		gl_FragColor = mix(fog_color, final_color, 0.5 );
+		gl_FragColor = final_color;
 	}
 
 </script>
