@@ -145,3 +145,11 @@ function multiply_elements(mat, val){
 		mat[i] *= val;
 	});
 }
+
+// should be a one liner, not declare multiple variables - could be used a lot
+function getReflection(input, normal){
+	var projection = vec3.dot(normal, input);
+	var doubled = projection*2;
+	var top = vec3.scale(normal, doubled);
+	return vec3.subtract(top, input);
+}

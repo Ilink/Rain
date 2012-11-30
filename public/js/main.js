@@ -52,10 +52,18 @@ $(document).ready(function(){
         var boundaries = engine.get_boundaries();
         var boundaries_far = engine.get_boundaries(-10);
 
+        // testing
+        var input = vec3.create([2, 2, 0]);
+        vec3.normalize(input, input);
+        var normal = vec3.create([0, 3, 0]);
+        vec3.normalize(normal, normal);
+        console.log(getReflection(input, normal));
+        ////////////////////////////////
+
         var particlesRenderer = new ParticlesRenderer(particle_shaders);
         engine.add_renderer(particlesRenderer);
 
-        
+
         // var background_renderer = new BgRenderer(gl, background_shaders);
         // // The shader for this does not use the perpsective matrix, so we just need clip space coords
         // var background_rect = [
