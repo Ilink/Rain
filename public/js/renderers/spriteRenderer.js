@@ -12,7 +12,6 @@ function SpriteRenderer(gl, shaders, textures){
     var vertColor;
     var position;
     
-    // this stays per-renderer
     function setup_shaders() {
         position = gl.getAttribLocation(self.shaderProgram, "position");
         if(position > -1)
