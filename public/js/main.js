@@ -52,74 +52,84 @@ $(document).ready(function(){
         var boundaries = engine.get_boundaries();
         var boundaries_far = engine.get_boundaries(-10);
 
-        var paticlesRenderer = new particlesRenderer(particle_shaders);
+        // testing
+        var input = vec3.create([2, 2, 0]);
+        vec3.normalize(input, input);
+        var normal = vec3.create([0, 3, 0]);
+        vec3.normalize(normal, normal);
+        console.log(getReflection(input, normal));
+        ////////////////////////////////
 
-        var background_renderer = new BgRenderer(gl, background_shaders);
-        // The shader for this does not use the perpsective matrix, so we just need clip space coords
-        var background_rect = [
-            -1,   -1,     0.0, // bot left
-            -1,    1,     0.0, // top left
-            1,    -1,     0.0, // bot right
-            1,     1,     0.0  // top right
-        ];
-        background_renderer.addGeo(background_rect, [0,0,-40]);
-        engine.add_renderer(background_renderer);
+        var particlesRenderer = new ParticlesRenderer(particle_shaders);
+        engine.add_renderer(particlesRenderer);
 
-        var squid_renderer = new SpriteRenderer(gl, squid_shaders);
-        engine.add_renderer(squid_renderer);
-        tmat = [-1.5, -2.0, -7.0];
-        var squid_sprite = squid_renderer.addGeo(
-            geo_builder.rectangle(1.0, 1.0), 
-            tmat, 
-            'squid_large.png'
-        );
+
+        // var background_renderer = new BgRenderer(gl, background_shaders);
+        // // The shader for this does not use the perpsective matrix, so we just need clip space coords
+        // var background_rect = [
+        //     -1,   -1,     0.0, // bot left
+        //     -1,    1,     0.0, // top left
+        //     1,    -1,     0.0, // bot right
+        //     1,     1,     0.0  // top right
+        // ];
+        // background_renderer.addGeo(background_rect, [0,0,-40]);
+        // // engine.add_renderer(background_renderer);
+
+        // var squid_renderer = new SpriteRenderer(gl, squid_shaders);
+        // engine.add_renderer(squid_renderer);
+        // tmat = [-1.5, -2.0, -7.0];
+        // var squid_sprite = squid_renderer.addGeo(
+        //     geo_builder.rectangle(1.0, 1.0), 
+        //     tmat, 
+        //     'squid_large.png'
+        // );
 
         // Rain ------------------------------------------------------------/
 
-        var rainRenderer = new RainRenderer(gl, rain_shaders, rtt_shaders);
-        engine.add_renderer(rainRenderer);
+        // var rainRenderer = new RainRenderer(gl, rain_shaders, rtt_shaders);
+        // // engine.add_renderer(rainRenderer);
 
-        /*
-        Give me a range from edge to edge of the screen
-        I am estimating the edge now, when my monitor is fullscreen
-        -4 < x < 4
+        // /*
+        // Give me a range from edge to edge of the screen
+        // I am estimating the edge now, when my monitor is fullscreen
+        // -4 < x < 4
 
-        Also, 1.5 is the top of the screen, hooray
-        */
-        var x_max = 100;
-        var x_min = 0;
-        var z_min = -5.0;
-        var z_max = -1;
-        var top = 1.5;
-        var z;
-        var geo_arr = [];
+        // Also, 1.5 is the top of the screen, hooray
+        // */
+        // var x_max = 100;
+        // var x_min = 0;
+        // var z_min = -5.0;
+        // var z_max = -1;
+        // var top = 1.5;
+        // var z;
+        // var geo_arr = [];
 
-        // If the user resizes their screen, the rain wont move beacause this is only calculated once
-        for(var i = x_min; i <= x_max; i++){
-            var x = fit_bound(i, x_min, x_max, -4, 4);
-            var z_rand = Math.random();
-            z = fit_bound(z_rand, 0, 1, z_min, z_max);
+        // // If the user resizes their screen, the rain wont move beacause this is only calculated once
+        // for(var i = x_min; i <= x_max; i++){
+        //     var x = fit_bound(i, x_min, x_max, -4, 4);
+        //     var z_rand = Math.random();
+        //     z = fit_bound(z_rand, 0, 1, z_min, z_max);
             
-            tmat = [x, boundaries.topleft[1], z];
-            // var _geo = rainRenderer.add_geo(geo_builder.rectangle(0.008, 0.09), tmat);
-            var _geo = rainRenderer.addGeo(geo_builder.rectangle(0.02, 0.8), tmat);
+        //     tmat = [x, boundaries.topleft[1], z];
+        //     // var _geo = rainRenderer.add_geo(geo_builder.rectangle(0.008, 0.09), tmat);
+        //     var _geo = rainRenderer.addGeo(geo_builder.rectangle(0.02, 0.8), tmat);
 
-            _geo.vel = Math.random()/150.0 + 0.0001;
-            geo_arr.push(_geo);
-        }
+        //     _geo.vel = Math.random()/150.0 + 0.0001;
+        //     geo_arr.push(_geo);
+        // }
 
-        var timeline = new Timeline(function(dt){
+        // var timeline = new Timeline(function(dt){
 
-            for(var i = 0; i < geo_arr.length; i++){
-                // geo_arr[i].trans[1] = -0.5;
+        //     for(var i = 0; i < geo_arr.length; i++){
+        //         // geo_arr[i].trans[1] = -0.5;
 
-                if(geo_arr[i].trans[1] < -4){
-                    geo_arr[i].trans[1] = boundaries.topleft[1]+1; // move them back to the top
-                } else
-                    geo_arr[i].trans[1] -= geo_arr[i].vel * dt;
-            }
-        });
-        timeline.start();
+        //         if(geo_arr[i].trans[1] < -4){
+        //             geo_arr[i].trans[1] = boundaries.topleft[1]+1; // move them back to the top
+        //         } else
+        //             geo_arr[i].trans[1] -= geo_arr[i].vel * dt;
+        //     }
+        // });
+        // timeline.start();
 
         engine.start();
         // engine.stop();
