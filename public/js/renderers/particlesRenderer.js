@@ -38,6 +38,15 @@ function ParticlesRenderer(shaders){
         return particlePositions;
     }
 
+    var formulas = [
+        {
+            eq: function(){
+
+            },
+            
+        }
+    ];
+
     this.render = function(time, dim, pMatrix, pMatrixInv) {
         // gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
         build(dim, pMatrix, pMatrixInv);

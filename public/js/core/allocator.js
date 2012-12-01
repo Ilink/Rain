@@ -1,44 +1,63 @@
 /*
 Allocator
 Allocates chunks out of a main pool. Keeps track of which chunks are used.
-The getChunk function only returns free chunks. 
-To free a chunk, use the ID of the chunk as it was returned to you. I think. Is there a better way of doing that?
+
+The pool is divided up into equal chunks of a given size.
+As chunks are allocated, they are removed from the free list.
+
+Chunks are indexed and referenced by integers.
+
+	[****][****][****]
+   	   1     2     3
+
+The pool size should never increase. At least, this doesn't account for that behavior.
 */
 
 function Allocator(pool, chunkSize){
 	var self = this;
-	var index = [];
 	var freeChunks = [];
 
-	function makeIndex(pool){
-		for(var i = 0; i < chunkSize; i++){
-			index.push(pool.slice(i*chunkSize, i*chunkSize + chunkSize));
+	function setupFreeChunks(){
+		// i will just assume for now that there is no remainder here
+		var numChunks = pool.length / chunkSize;
+
+		for(var i = 0; i < numChunks; i++){
+			freeChunks.push(i);
 		}
 	}
 
-	function setupFreeChunks(){
-		freeChunks = index;
-	}
 
-	function makeChunk(index){
-		var chunk = pool.slice(start, end);
+	function makeChunk(i){
+		var chunk = getChunk(i);
 		chunk.free = function(){
-			self.__free(index);
+			free(i);
 		};
 		return chunk;
 	}
 
-	this.getChunk = function(){
-		/*
-		get first chunk in the free list
-		remove chunk from free list
-		*/
+	function free(i){
+		freeChunks.push(i);
 	}
 
-	this.__free = function(i){
-		/*
-		add chunk to free list
-		*/
-		freeChunks.push(index[i]);
+	function getChunk(i){
+		var start = i * chunkSize;
+		var end = start + chunkSize;
+		return pool.slice(start, end);
+	}
+
+	setupFreeChunks();
+
+	/*
+	Return a chunk and remove it from the free list
+	*/
+	this.get = function(){
+		if(freeChunks.length > 0){
+			var i = freeChunks[0];
+			freeChunks = freeChunks.slice(1);
+			return makeChunk(i);
+		} else {
+			// inconsistent return value, yes. But it's a performance hit to make a new array
+			return false;
+		}
 	}
 }
