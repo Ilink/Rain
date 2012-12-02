@@ -52,8 +52,31 @@ $(document).ready(function(){
         var boundaries = engine.get_boundaries();
         var boundaries_far = engine.get_boundaries(-10);
 
-        var particlesRenderer = new ParticlesRenderer(particle_shaders);
+        function makeParticles(num){
+            var size = num * 6; // each particle is a line, so it has 6 position coordinates
+                                          // aX, aY, aZ & bX, bY, bZ
+            var particlePositions = [];
+            for(var i = 0; i < num; i++){
+                // particlePositions.push(Math.random()*100, Math.random()*100, -1*Math.random()*3);
+                particlePositions.push(Math.random()*2 -1, Math.random()*2 -1, Math.random(),
+                    Math.random()*2 -1, Math.random()*2 -1, Math.random());
+            }
+            return particlePositions;
+        }
+
+        var particleVerts = makeParticles(1000);
+        var particlesRenderer = new ParticlesRenderer(particle_shaders, particleVerts);
         engine.add_renderer(particlesRenderer);
+        var mouse = new Mouse();
+        var mouseParticles = new MouseParticles(particleVerts, mouse);
+
+
+
+
+
+
+
+
 
 
         // var background_renderer = new BgRenderer(gl, background_shaders);

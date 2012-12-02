@@ -7,7 +7,7 @@ vec3.normalize(normal, normal);
 console.log(getReflection(input, normal));
 
 // Allocator tests
-///////////////////////////////
+//////////////////////////////////
 var pool = [];
 var size = 10;
 var chunkSize = 2;

@@ -10,6 +10,9 @@ Chunks are indexed and referenced by integers.
 	[****][****][****]
    	   1     2     3
 
+So we have another array that stores the indexes of free chunks.
+Returns indexes that mark the start and end of each chunk. 
+
 The pool size should never increase. At least, this doesn't account for that behavior.
 */
 
@@ -26,7 +29,6 @@ function Allocator(pool, chunkSize){
 		}
 	}
 
-
 	function makeChunk(i){
 		var chunk = getChunk(i);
 		chunk.free = function(){
@@ -42,7 +44,10 @@ function Allocator(pool, chunkSize){
 	function getChunk(i){
 		var start = i * chunkSize;
 		var end = start + chunkSize;
-		return pool.slice(start, end);
+		return {
+			start: start,
+			end: end
+		};
 	}
 
 	setupFreeChunks();

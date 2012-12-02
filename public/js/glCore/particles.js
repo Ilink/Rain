@@ -16,12 +16,11 @@ function Particles(verts, positionAttrib){
 		return buffer;
 	}
 
-	var glVerts = new Float32Array(verts);
-	
-
 	this.buffer = makeBuffer(verts);
 
+
 	this.draw = function(){
+		self.buffer = makeBuffer(verts);
 		gl.lineWidth(2);
 		gl.bindBuffer(gl.ARRAY_BUFFER, self.buffer.glBuffer);
 		gl.vertexAttribPointer(positionAttrib, 3, gl.FLOAT, false, 0, 0);
