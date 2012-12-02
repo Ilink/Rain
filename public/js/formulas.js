@@ -17,16 +17,22 @@ function SineWave(){
 	var x;
 
 	function sin(x, yOffset){
-		result.y = (Math.sin(x) + yOffset);
+		result.y = (Math.sin(5*x) + yOffset);
 		result.x = x;
 	}
 
-	function moveParticles(block, coords){
+
+	/*
+	the particles need a length
+	a position (we got that)
+	a direction vector
+	*/
+	function moveParticles(block, coords, velocityVec){
 		partialLineIter(block.start, block.end, function(axIndex, ayIndex, azIndex, bxIndex, byIndex, bzIndex){
 			block.data[axIndex] = coords.x;
-			block.data[bxIndex] = coords.x + Math.random() / 2;
+			block.data[bxIndex] = coords.x + Math.random() / 10;
 			block.data[ayIndex] = coords.y;
-			block.data[byIndex] = coords.y + Math.random() / 3;
+			block.data[byIndex] = coords.y + Math.random() / 10;
 		});
 	}
 
@@ -35,11 +41,16 @@ function SineWave(){
 			totalTime = new Date() - startTime;
 
 			if(totalTime < duration){
-				x += 0.001;
+				x += 0.005;
 				sin(x, yOffset);
 				moveParticles(block, result);
 			} else {
-				// stop
+				/* 
+				currently this is a problem?
+				the free might take place too quickly
+				or it is using the latest, not the last
+				*/
+				block.free();
 			}
 			tick(block, xOffset, yOffset, duration);
 		});
