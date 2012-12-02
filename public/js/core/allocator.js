@@ -30,10 +30,13 @@ function Allocator(pool, chunkSize){
 	}
 
 	function makeChunk(i){
-		var chunk = getChunk(i);
+		var chunk = {};
+		chunk.start = i * chunkSize;
+		chunk.end = chunk.start + chunkSize;
 		chunk.free = function(){
 			free(i);
 		};
+		chunk.data = pool;
 		return chunk;
 	}
 

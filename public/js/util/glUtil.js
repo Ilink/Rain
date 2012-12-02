@@ -48,8 +48,14 @@ function makeGeoBuffer(verts, itemSize){
 
 var makeBuffer = makeGeoBuffer; // alias
 
-function lineIter(lines, callback){
-    for(var i = 0; i < lines.length; i+=6){
+function lineIter(length, callback){
+    for(var i = 0; i < length; i+=6){
         callback.call(this, i, i+1, i+2, i+3, i+4, i+5);
     }
+}
+
+function partialLineIter(start, end, callback){
+    for(var i = start; i < end; i+=6){
+       callback.call(this, i, i+1, i+2, i+3, i+4, i+5);
+    }   
 }
