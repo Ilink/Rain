@@ -21,7 +21,6 @@ function SineWave(){
 		result.x = x;
 	}
 
-
 	/*
 	the particles need a length
 	a position (we got that)
@@ -36,7 +35,7 @@ function SineWave(){
 		});
 	}
 
-	function tick(block, xOffset, yOffset, duration){
+	function tick(block, xOffset, yOffset, duration, velocityVec){
 		window.requestAnimationFrame(function(){
 			totalTime = new Date() - startTime;
 
@@ -52,7 +51,7 @@ function SineWave(){
 				*/
 				block.free();
 			}
-			tick(block, xOffset, yOffset, duration);
+			tick(block, xOffset, yOffset, duration, velocityVec);
 		});
 	}
 
@@ -61,7 +60,7 @@ function SineWave(){
 		x = xOffset;
 
 		window.requestAnimationFrame(function(){
-			tick(block, x, yOffset, duration);
+			tick(block, x, yOffset, duration, velocityVec);
 		});
 	}
 }
