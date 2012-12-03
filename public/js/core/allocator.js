@@ -25,6 +25,10 @@ function Allocator(pool, chunkSize){
 	var self = this;
 	var freeChunks = [];
 
+	// var chunks = {
+	// 	"1": {"free": true}
+	// }
+
 	function setupFreeChunks(){
 		// i will just assume for now that there is no remainder here
 		var numChunks = pool.length / chunkSize;
