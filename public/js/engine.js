@@ -63,11 +63,15 @@ function Engine(canvas){
 
     var timeline = new Timeline(function(){
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-        $.each(renderers, function(i, renderer){
-            gl.useProgram(renderer.shaderProgram);
-            renderer.render(parameters.time, 
+        
+        $(document).trigger('engineTick', [parameters.time, 
                 {width: screenWidth, height: screenHeight}, 
-                pMatrix, pMatrixInv);
+                pMatrix, pMatrixInv]);
+        $.each(renderers, function(i, renderer){
+            // gl.useProgram(renderer.shaderProgram);
+            // renderer.render(parameters.time, 
+            //     {width: screenWidth, height: screenHeight}, 
+            //     pMatrix, pMatrixInv);
         });
     });
 

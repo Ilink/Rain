@@ -28,6 +28,11 @@ function ParticlesRenderer(shaders, particleVerts){
         self.__setDefaultUniforms(self.shaderProgram, pMatrix, mvMatrix, dim);
         particles.draw();
     };
+
+    $(document).on('engineTick', function(e, time, dim, pMatrix, pMatrixInv){
+        gl.useProgram(self.shaderProgram);
+        self.render(time, dim, pMatrix, pMatrixInv);
+    });
 }
 
 ParticlesRenderer.prototype = new RendererBase();
