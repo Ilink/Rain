@@ -18,13 +18,16 @@ function Particles(verts, positionAttrib){
 
 	this.buffer = makeBuffer(verts);
 
-
-	this.draw = function(){
+	this.draw = function(start, end){
 		self.buffer = makeBuffer(verts);
 		gl.lineWidth(2);
 		gl.bindBuffer(gl.ARRAY_BUFFER, self.buffer.glBuffer);
 		gl.vertexAttribPointer(positionAttrib, 3, gl.FLOAT, false, 0, 0);
-		gl.drawArrays(gl.LINES, 0, this.buffer.numItems);
+		if(typeof start !== 'undefined' && typeof end !== 'undefined'){
+			gl.drawArrays(gl.LINES, start, end-start);
+		} else {
+			gl.drawArrays(gl.LINES, 0, this.buffer.numItems);
+		}
 		// gl.drawArrays(gl.TRIANGLES, 0, 3);
 	}
 }

@@ -19,30 +19,14 @@ function ParticlesRenderer(shaders, particleVerts){
             gl.enableVertexAttribArray(position);
     }
 
-    function build(dim, pMatrix, pMatrixInv){
-        // gl.uniform2f(resolution, dim.width, dim.height);
-        self.__setDefaultUniforms(self.shaderProgram, pMatrix, mvMatrix, dim);
-        particles.draw();
-    }
-
     setup_shaders();
     var particles = new Particles(particleVerts, position);
 
-    var formulas = [
-        {
-            eq: function(){
-
-            }
-        }
-    ];
-
-    function applyTmats(){
-
-    }
-
     this.render = function(time, dim, pMatrix, pMatrixInv) {
-        // gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-        build(dim, pMatrix, pMatrixInv);
+        gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+        // gl.uniform2f(resolution, dim.width, dim.height);
+        self.__setDefaultUniforms(self.shaderProgram, pMatrix, mvMatrix, dim);
+        particles.draw();
     };
 }
 
