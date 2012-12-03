@@ -1,4 +1,4 @@
-function MouseParticles(verts, mouse){
+function MouseParticles(renderer, verts, mouse){
 	var allocator = new Allocator(verts, 240);
 	
 

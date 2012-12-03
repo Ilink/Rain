@@ -14,6 +14,11 @@ So we have another array that stores the indexes of free chunks.
 Returns indexes that mark the start and end of each chunk. 
 
 The pool size should never increase. At least, this doesn't account for that behavior.
+
+
+Todo:
+Revamp this to use a hash instead?
+Keep track of both allocated and unallocated values
 */
 
 function Allocator(pool, chunkSize){
@@ -60,7 +65,8 @@ function Allocator(pool, chunkSize){
 	*/
 	this.get = function(){
 		if(freeChunks.length > 0){
-			var i = freeChunks[0];
+			var i = _.last(freeChunks);
+			// var i = freeChunks[0];
 			freeChunks = freeChunks.slice(1);
 			return makeChunk(i);
 		} else {

@@ -68,7 +68,7 @@ $(document).ready(function(){
         var particlesRenderer = new ParticlesRenderer(particle_shaders, particleVerts);
         engine.add_renderer(particlesRenderer);
         var mouse = new Mouse();
-        var mouseParticles = new MouseParticles(particleVerts, mouse);
+        var mouseParticles = new MouseParticles(particlesRenderer, particleVerts, mouse);
 
 
 
