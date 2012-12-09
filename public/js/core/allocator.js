@@ -26,8 +26,19 @@ function Allocator(pool, chunkSize){
 	var freeChunks = [];
 
 	// var chunks = {
-	// 	"1": {"free": true}
+	// 	1: {"free": true}
 	// }
+
+	/*
+	Overkill?
+	i suppose i would profile at some point
+	*/
+	var freeIndex = {
+		1: true
+	};
+	var allocatedIndex = {
+
+	};
 
 	function setupFreeChunks(){
 		// i will just assume for now that there is no remainder here
