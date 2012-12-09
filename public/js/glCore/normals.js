@@ -22,16 +22,24 @@ function calcFaceNormals(verts){
 
 	// this might need to be 6 or 9
 	// loop is wrong, cases are right
-	for(var i = 8; i < verts.length; i+=3){
-		if(i % 2){
-			vec1.set(verts[i], verts[i+1], verts[i+2]);
-			vec2.set(verts[i-3], verts[i-2], verts[i-1]);
-			vec3.set(verts[i+3], verts[i+4], verts[i+5]);	
-		} else {
-			vec1.set(verts[i], verts[i+1], verts[i+2]);
-			vec2.set(verts[i+3], verts[i+4], verts[i+5]);
-			vec3.set(verts[i+6], verts[i+7], verts[i+8]);
-		}
+	for(var i = 8; i < verts.length; i+=6){
+		// if(i % 2){
+		// 	vec1.set(verts[i], verts[i+1], verts[i+2]);
+		// 	vec2.set(verts[i-3], verts[i-2], verts[i-1]);
+		// 	vec3.set(verts[i+3], verts[i+4], verts[i+5]);	
+		// } else {
+		// 	vec1.set(verts[i], verts[i+1], verts[i+2]);
+		// 	vec2.set(verts[i+3], verts[i+4], verts[i+5]);
+		// 	vec3.set(verts[i+6], verts[i+7], verts[i+8]);
+		// }
+
+		vec1.set(verts[i], verts[i+1], verts[i+2]);
+		vec2.set(verts[i-3], verts[i-2], verts[i-1]);
+		vec3.set(verts[i+3], verts[i+4], verts[i+5]);
+		
+		vec1.set(verts[i], verts[i+1], verts[i+2]);
+		vec2.set(verts[i+3], verts[i+4], verts[i+5]);
+		vec3.set(verts[i+6], verts[i+7], verts[i+8]);
 	
 		vec3.cross(vec1, vec2, normal);
 		vec3.normalize(normal, normal);
