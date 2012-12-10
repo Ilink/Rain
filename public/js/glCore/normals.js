@@ -69,8 +69,11 @@ function makeVertName(x,y,z){
 }
 
 /*
-each set of verts gets a face
-when merging verts, merges that set of faces
+iterate over vertexes
+	set the hash name of the vert, given its location makeVertName(x, y, z)
+	add or append the neighboring faces
+	weight by edge with other faces
+	add to normal value?
 */
 
 
