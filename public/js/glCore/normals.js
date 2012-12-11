@@ -9,8 +9,7 @@ function calcFaceNormals(verts){
 	i recommend looking at a picture of a triangle strip if this is confusing
 	basically we have to treat the first as a full triangle and the rest as an extension of it
 
-	first case is special
-	then reverse next/prev on even/odd
+	this is kind of in need of refactoring - there's no need to have this thing outside the main loop
 	*/
 
 	vecA.set([verts[0], verts[1], verts[2]]);
@@ -23,8 +22,6 @@ function calcFaceNormals(verts){
 	vec3.normalize(normal, normal);
 	faces.push(normal);
 
-	// this might need to be 6 or 9
-	// loop is wrong, cases are right
 	for(var i = 6; i < verts.length; i+=6){
 		vecA.set([verts[i], verts[i+1], verts[i+2]]);
 		vecB.set([verts[i-3], verts[i-2], verts[i-1]]);
@@ -64,6 +61,10 @@ function makeVertNormals(verts, faces){
 	}
 }
 
+function getNeighborFaces(i, faces){
+
+}
+
 function makeVertName(x,y,z){
 	return x+"x"+y+"x"+z;
 }
@@ -72,8 +73,36 @@ function makeVertName(x,y,z){
 iterate over vertexes
 	set the hash name of the vert, given its location makeVertName(x, y, z)
 	add or append the neighboring faces
+		should be able to find neighbor faces from vertex index
 	weight by edge with other faces
 	add to normal value?
+*/
+
+/*
+|\|\|\|
+vert 0 => face 0
+vert 1 => face 0, 1
+vert 2 => face 0, 1, 2
+vert 3 => face 1, 2
+vert 4 => face 2, 3, 4
+vert 5 => face 3, 4
+
+I think the first two are edge cases because they are the first two verts. 
+The last two may have the same?
+
+even vert i: face i, i-1, i-2
+odd vert i: face i-1, i-2
+
+last edge
+last vert (top): last face
+last vert (bot): last face, last face-1
+
+first edge
+first vert (bottom): first face
+first vert (top): first face, first face+1
+
+that definition is flawed for bigger sets of data
+it's more like a face with no neighbors
 */
 
 
