@@ -7,48 +7,29 @@ function calcFaceNormals(verts){
 
 	/*
 	i recommend looking at a picture of a triangle strip
-
-	this is kind of in need of refactoring - there's no need to have this thing outside the main loop
+	This is for clockwise winding. Not sure if that's right? Should I be using ccw?
 	*/
 
-	vecA.set([verts[0], verts[1], verts[2]]);
-	vecB.set([verts[3], verts[4], verts[5]]);
-	vecC.set([verts[6], verts[7], verts[8]]);
-	vec3.cross(vecA, vecB, normal);
-	console.log(vecA);
-	console.log(vecB);
-	console.log(normal);
-	vec3.normalize(normal, normal);
-	faces.push(normal);
-
 	for(var i = 6; i < verts.length; i+=6){
-		vecA.set([verts[i], verts[i+1], verts[i+2]]);
-		vecB.set([verts[i-3], verts[i-2], verts[i-1]]);
-		vecC.set([verts[i+3], verts[i+4], verts[i+5]]);
 
-		console.log(vecA);
-		console.log(vecB);
-
-		vec3.cross(vecA, vecB, normal);
-		vec3.normalize(normal, normal);
-		console.log(normal);
-
-		faces.push(normal);
-		
 		if(i+6 < verts.length){
 			vecA.set([verts[i], verts[i+1], verts[i+2]]);
 			vecB.set([verts[i+3], verts[i+4], verts[i+5]]);
 			vecC.set([verts[i+6], verts[i+7], verts[i+8]]);
 
-			console.log(vecA);
-			console.log(vecB);
-			
 			vec3.cross(vecA, vecB, normal);
-			console.log(normal);
 			vec3.normalize(normal, normal);
 			faces.push(normal);
-		}
-		
+		} else throw "not enough verts";
+
+		vecA.set([verts[i], verts[i+1], verts[i+2]]);
+		vecB.set([verts[i-3], verts[i-2], verts[i-1]]);
+		vecC.set([verts[i+3], verts[i+4], verts[i+5]]);
+
+		vec3.cross(vecA, vecB, normal);
+		vec3.normalize(normal, normal);
+
+		faces.push(normal);
 	}
 	return faces;
 }
