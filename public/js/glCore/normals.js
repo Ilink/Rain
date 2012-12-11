@@ -74,13 +74,51 @@ function vertIter(verts, cb){
 	}
 }
 
+function getVert(verts, i){
+	if(i % 3 !== 0) throw "Cannot get vertex from non multiple of 3: " + i;
+	return [verts[i], verts[i+1], verts[i+2]];
+}
+
+function getNumVerts(verts){
+	return verts.length / 3;
+}
+
 function isBoundary(verts, i){
-	/*
-	right boundary:
-		if next vert or vert after have X component < current X, we are at a boundary
-	left boundary:
-		if previous vert or prev-1 X < current X return true
-	*/
+	if(i >= verts.length || 
+	i === 0 ||
+	i === 3){
+		return true;
+	} else {
+		var currentX = verts[i];
+		var prevX = verts[i-3];
+		var nextX = verts[i+3];
+		if(prevX > currentX) return true;
+		if(nextX < currentX) return true;
+		return false;
+	}
+}
+
+function createMergedVerts(){
+	var merged = {}, key;
+	vertIter(verts, function(x,y,z){
+		key = makeVertName(x,y,z);
+		if(typeof merged[key] === 'undefined'){
+			merged[key] = {
+				faces: {};
+			};
+			// merged[key].faces[]
+			var currentFaces = getFaces(i);
+		}
+	});
+}
+
+// i is a vertex index 
+function getFaces(faces, i){
+	if(i % 2){
+		return {faces[i]: true, faces[i-1]: true, faces[i-2]: true};
+	} else {
+		return {faces[i-1]: true, faces[i-2]: true};
+	}
 }
 
 /*
