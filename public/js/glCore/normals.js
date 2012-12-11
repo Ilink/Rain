@@ -6,8 +6,7 @@ function calcFaceNormals(verts){
 	var faces = [];
 
 	/*
-	i recommend looking at a picture of a triangle strip if this is confusing
-	basically we have to treat the first as a full triangle and the rest as an extension of it
+	i recommend looking at a picture of a triangle strip
 
 	this is kind of in need of refactoring - there's no need to have this thing outside the main loop
 	*/
@@ -67,6 +66,21 @@ function getNeighborFaces(i, faces){
 
 function makeVertName(x,y,z){
 	return x+"x"+y+"x"+z;
+}
+
+function vertIter(verts, cb){
+	for(var i = 0; i < verts.length; i+=3){
+		cb.call(this, verts[i], verts[i+1], verts[i+2]);
+	}
+}
+
+function isBoundary(verts, i){
+	/*
+	right boundary:
+		if next vert or vert after have X component < current X, we are at a boundary
+	left boundary:
+		if previous vert or prev-1 X < current X return true
+	*/
 }
 
 /*
