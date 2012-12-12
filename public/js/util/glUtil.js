@@ -33,7 +33,26 @@ var geo_builder = {
         1,    -1,     0.0, // bot right
         1,     1,     0.0  // top right
     ]
-}
+};
+
+var geoPresets = {
+    rectangle: {
+        /*
+        4  3
+        1  2
+        */
+        verts: [
+            0.0, 0.0, 0.0,
+            1.0, 0.0, 0.0,
+            1.0, 1.0, 0.0,
+            0.0, 1.0, 0.0
+        ],
+        indexes: [
+            0, 1, 2,
+            0, 2, 3
+        ]
+    }
+};
 
 function makeGeoBuffer(verts, itemSize){
     var buffer = {};

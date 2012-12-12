@@ -5,8 +5,8 @@ rect = $.extend(rect, {});
 rect[2] = 2;
 rect[5] = 2;
 rect[11] = 2;
-var faceNormals = calcFaceNormals(rect);
-console.log('face normals: ',faceNormals);
+// var faceNormals = calcFaceNormals(rect);
+// console.log('face normals: ',faceNormals);
 
 
 // Reflection vector tests

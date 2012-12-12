@@ -12,6 +12,7 @@ Logger.prototype.log = function(){
 		var evalStr = 'console.log(';
 		var args = Array.prototype.slice.call(arguments);
 		for(var i = 0; i < args.length; i++){
+			console.log(typeof arguments[i], i)
 			var str = arguments[i];
 			if(typeof str === 'string') str = "'"+str+"'";
 			evalStr += str+',';
@@ -23,6 +24,6 @@ Logger.prototype.log = function(){
 	} else return false;
 }
 
-console.log('a');
-var logger = new Logger();
-logger.log('a', {a:1},2,3);
+// console.log('a');
+// var logger = new Logger();
+// logger.log('a', {a:1},2,3);

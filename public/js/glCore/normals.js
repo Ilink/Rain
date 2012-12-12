@@ -1,3 +1,7 @@
+function getVert(verts, i){
+	return [verts[i], verts[i+1], verts[i+2]];
+}
+
 function calcFaceNormals(vertIndexes, verts){
 	var vecA = vec3.create();
 	var vecB = vec3.create();
@@ -79,10 +83,6 @@ function vertIter(verts, cb){
 	}
 }
 
-function getVert(verts, i){
-	return [verts[i], verts[i+1], verts[i+2]];
-}
-
 function getNumVerts(verts){
 	return verts.length / 3;
 }
@@ -108,10 +108,10 @@ function createMergedVerts(){
 		key = makeVertName(x,y,z);
 		if(typeof merged[key] === 'undefined'){
 			merged[key] = {
-				faces: {};
+				faces: {}
 			};
 			// merged[key].faces[]
-			var currentFaces = getFaces(i);
+			// var currentFaces = getFaces(i);
 		}
 	});
 }
@@ -119,9 +119,9 @@ function createMergedVerts(){
 // i is a vertex index 
 function getFaces(faces, i){
 	if(i % 2){
-		return {faces[i]: true, faces[i-1]: true, faces[i-2]: true};
+		// return {faces[i]: true, faces[i-1]: true, faces[i-2]: true};
 	} else {
-		return {faces[i-1]: true, faces[i-2]: true};
+		// return {faces[i-1]: true, faces[i-2]: true};
 	}
 }
 
