@@ -1,4 +1,26 @@
-function calcFaceNormals(verts){
+function calcFaceNormals(vertIndexes, verts){
+	var vecA = vec3.create();
+	var vecB = vec3.create();
+	var vecC = vec3.create();
+	var normal = vec3.create();
+	var faces = [];
+	var vertA, vertB;
+
+	vertIter(vertIndexes, function(a, b, c){
+		vertA = getVert(verts, a);
+		vecA.set([vertA[0], vertA[1], vertA[2]]);
+		vertB = getVert(verts, b);
+		vecB.set([vertB[0], vertB[1], vertB[2]]);
+
+		vec3.cross(vecA, vecB, normal);
+		vec3.normalize(normal, normal);
+		faces.push(normal);
+	});
+}
+
+// deprecateddddddddd
+// going to use indexed triangles instead
+function _old_calcFaceNormals(verts){
 	var vecA = vec3.create();
 	var vecB = vec3.create();
 	var vecC = vec3.create();
@@ -8,6 +30,8 @@ function calcFaceNormals(verts){
 	/*
 	i recommend looking at a picture of a triangle strip
 	This is for clockwise winding. Not sure if that's right? Should I be using ccw?
+
+	lets switch this whole thing to use indexed triangles instead
 	*/
 
 	for(var i = 6; i < verts.length; i+=6){
@@ -56,7 +80,6 @@ function vertIter(verts, cb){
 }
 
 function getVert(verts, i){
-	if(i % 3 !== 0) throw "Cannot get vertex from non multiple of 3: " + i;
 	return [verts[i], verts[i+1], verts[i+2]];
 }
 
@@ -136,6 +159,11 @@ first vert (top): first face, first face+1
 
 that definition is flawed for bigger sets of data
 it's more like a face with no neighbors
+*/
+
+/*
+simplify the above:
+just contribute one face per vertex, then merge in normalization
 */
 
 
