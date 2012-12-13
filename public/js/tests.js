@@ -42,6 +42,6 @@ var allocator = new Allocator(pool, chunkSize);
 for(var i = 0; i < size / chunkSize; i++){
     var chunk = allocator.get();
     if(i % 2 === 0) chunk.free();
-    console.log(chunk);
+    // console.log(chunk);
 }
 // console.log(allocator.get());

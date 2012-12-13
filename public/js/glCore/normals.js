@@ -17,7 +17,6 @@ function calcFaceNormals(vertIndexes, verts){
 	// iterator goes over a set of vertex indexes that will form a triangle
 	vertIter(vertIndexes, function(faceIndex, a, b, c){
 		var normal = vec3.create();
-		console.log(a, b, c);
 		vertA = getVert(verts, a);
 		vecA.set([vertA[0], vertA[1], vertA[2]]);
 		vertB = getVert(verts, b);
@@ -29,29 +28,21 @@ function calcFaceNormals(vertIndexes, verts){
 		vec3.subtract(vecB, vecA, edgeA);
 		vec3.subtract(vecC, vecA, edgeB);
 
-		console.log(edgeA, edgeB);
 		vec3.cross(edgeB, edgeA, normal);
 		faces.push(normal);
 		vec3.normalize(normal);
 
-		calculateWeightedNormal(vertA, vertB, vertC, normal, weightedNormalA);
-		vec3.normalize(weightedNormalA, weightedNormalA);
-		// assignVertProperties(vertSet, a, faceIndex, weightedNormalA);
+		// calculateWeightedNormal(vertA, vertB, vertC, normal, weightedNormalA);
+		// vec3.normalize(weightedNormalA, weightedNormalA);
 		assignVertProperties(vertSet, a, faceIndex, normal);
-		// console.log('weightedA', weightedNormalA);
 
-		calculateWeightedNormal(vertB, vertA, vertC, normal, weightedNormalB);
-		vec3.normalize(weightedNormalB, weightedNormalB);
-		// assignVertProperties(vertSet, b, faceIndex, weightedNormalB);
+		// calculateWeightedNormal(vertB, vertA, vertC, normal, weightedNormalB);
+		// vec3.normalize(weightedNormalB, weightedNormalB);
 		assignVertProperties(vertSet, b, faceIndex, normal);
-		// console.log('weightedB', weightedNormalB);
 
-		calculateWeightedNormal(vertC, vertB, vertA, normal, weightedNormalC);
-		vec3.normalize(weightedNormalC, weightedNormalC);
-		// assignVertProperties(vertSet, c, faceIndex, weightedNormalC);
-
+		// calculateWeightedNormal(vertC, vertB, vertA, normal, weightedNormalC);
+		// vec3.normalize(weightedNormalC, weightedNormalC);
 		assignVertProperties(vertSet, c, faceIndex, normal);
-		console.log('weightedC', weightedNormalC);
 
 	});
 
