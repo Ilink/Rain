@@ -4,14 +4,19 @@
 var a = vec3.create([1,0,0]);
 var b = vec3.create([0,1,0]);
 var angleBetween = getAngle(a,b);
-console.log("angle between", angleBetween);
+// console.log("angle between", angleBetween);
 
 var rect = geo_builder.rectangle_gradient;
 var rect = geoPresets.rectangle;
 rect = $.extend(rect, {});
-rect.verts[2] = 2;
-rect.verts[5] = 25;
-rect.verts[11] = 50;
+console.log('using rect:', rect);
+// rect.verts[2] = 2;
+rect.verts[3] = 0.5;
+rect.verts[4] = 0.5;
+rect.verts[5] = -50;
+
+// rect.verts[5] = 25;
+// rect.verts[11] = 50;
 var faceNormals = calcFaceNormals(rect.indexes, rect.verts);
 console.log('face normals: ', faceNormals);
 

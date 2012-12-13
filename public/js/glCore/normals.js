@@ -1,4 +1,5 @@
 function getVert(verts, i){
+	var i = i*3;
 	return [verts[i], verts[i+1], verts[i+2]];
 }
 
@@ -26,10 +27,10 @@ function calcFaceNormals(vertIndexes, verts){
 
 		// Make the edge vectors
 		vec3.subtract(vecB, vecA, edgeA);
-		vec3.subtract(vecB, vecC, edgeB);
+		vec3.subtract(vecC, vecA, edgeB);
 
 		console.log(edgeA, edgeB);
-		vec3.cross(edgeA, edgeB, normal);
+		vec3.cross(edgeB, edgeA, normal);
 		faces.push(normal);
 		vec3.normalize(normal);
 
@@ -84,6 +85,11 @@ function calculateWeightedNormal(targetVert, vertA, vertB, normal, destinationVe
 	vec3.scale(normal, avgAngle, destinationVec);
 }
 
+/*
+Averages a vertex normal amongst its shared faces's normals
+Simpler than using MWA or something else.
+Ill move on to something else when this isn't cutting it
+*/
 function calculateSimpleNormalAvg(vertSet){
 	$.each(vertSet, function(i, vert){
 		var total = vec3.create();
