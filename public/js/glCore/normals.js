@@ -6,20 +6,111 @@ function calcFaceNormals(vertIndexes, verts){
 	var vecA = vec3.create();
 	var vecB = vec3.create();
 	var vecC = vec3.create();
-	var normal = vec3.create();
+	var edgeA = vec3.create();
+	var edgeB = vec3.create();
+	var weightedNormalA = vec3.create(), weightedNormalB = vec3.create(), weightedNormalC = vec3.create();
 	var faces = [];
+	var vertSet = buildArray(verts.length / 3);
 	var vertA, vertB;
 
-	vertIter(vertIndexes, function(a, b, c){
+	// iterator goes over a set of vertex indexes that will form a triangle
+	vertIter(vertIndexes, function(faceIndex, a, b, c){
+		var normal = vec3.create();
+		console.log(a, b, c);
 		vertA = getVert(verts, a);
 		vecA.set([vertA[0], vertA[1], vertA[2]]);
 		vertB = getVert(verts, b);
 		vecB.set([vertB[0], vertB[1], vertB[2]]);
+		vertC = getVert(verts, c);
+		vecC.set([vertC[0], vertC[1], vertC[2]]);
 
-		vec3.cross(vecA, vecB, normal);
-		vec3.normalize(normal, normal);
+		// Make the edge vectors
+		vec3.subtract(vecB, vecA, edgeA);
+		vec3.subtract(vecB, vecC, edgeB);
+
+		console.log(edgeA, edgeB);
+		vec3.cross(edgeA, edgeB, normal);
 		faces.push(normal);
+
+		calculateWeightedNormal(vertA, vertB, vertC, normal, weightedNormalA);
+		vec3.normalize(weightedNormalA, weightedNormalA);
+		assignVertProperties(vertSet, a, faceIndex, weightedNormalA);
+		console.log('weightedA', weightedNormalA);
+
+		calculateWeightedNormal(vertB, vertA, vertC, normal, weightedNormalB);
+		vec3.normalize(weightedNormalB, weightedNormalB);
+		assignVertProperties(vertSet, b, faceIndex, weightedNormalB);
+		console.log('weightedB', weightedNormalB);
+
+		calculateWeightedNormal(vertC, vertB, vertA, normal, weightedNormalC);
+		vec3.normalize(weightedNormalC, weightedNormalC);
+		assignVertProperties(vertSet, c, faceIndex, weightedNormalC);
+		console.log('weightedC', weightedNormalC);
+
 	});
+	return {
+		faces: faces,
+		vertProperties: vertSet
+	};
+}
+
+/*
+The idea here is that we weight the normal contribution from the face by the
+angle between the vertex and that face. 
+There are two other verts that always contribute to the normal. We use the angle between
+our current vertex and those other two vertexes. 
+  1
+ / \
+0---2
+So if the angle was really high, we want to use the normal less.  
+Additionally, there are many different faces shared per vertex. We average those as well.
+	=> sum shared normals / num faces
+*/
+function calculateWeightedNormal(targetVert, vertA, vertB, normal, destinationVec){
+	var angleA, angleB, avgAngle;
+	angleA = getAngle(targetVert, vertA);
+	angleB = getAngle(targetVert, vertB);
+	avgAngle = (angleA + angleB) / 2.0;
+	avgAngle = 1.0 / avgAngle;
+	if(avgAngle < 0) avgAngle = 0;
+	vec3.scale(normal, avgAngle, destinationVec);
+	console.log(normal, avgAngle, destinationVec);
+}
+
+/*
+this could be sped up to avoid extra square roots
+http://stackoverflow.com/questions/9200723/efficient-way-to-get-the-angle-between-two-vectors-in-a-single-plane
+
+this one has one less square root, i think
+float xz = x*x + z*z, y11 = y1*y1, y12 = y1*y2, y22 = y2*y2;
+
+float cosangle = (xz + y12) / sqrt((xz + y11) * (xz + y22));
+float angle = acos(cosangle);
+*/
+function getAngle(a, b){
+	if(vec3.equal(a,b)) return 0.0;
+	var dot, magA, magB;
+	dot = vec3.dot(a, b);
+	magA = vec3.length(a);
+	magB = vec3.length(b);
+	return Math.acos(dot / (magA * magB));
+}
+
+function assignVertProperties(vertSet, vertIndex, faceIndex, normal){
+	console.log('normal', normal);
+	if(vertSet[vertIndex] === null){
+		vertSet[vertIndex] = {
+			faces: {},
+			normals: [normal]
+		}
+		vertSet[vertIndex].faces[faceIndex] = true;
+	} else {
+		var currentVert = vertSet[vertIndex];
+		if(typeof currentVert.faces[faceIndex] === 'undefined'){
+			currentVert.faces[faceIndex] = true;
+			currentVert.normals.push(normal);
+		}
+	}
 }
 
 // deprecateddddddddd
@@ -62,13 +153,6 @@ function _old_calcFaceNormals(verts){
 	return faces;
 }
 
-function makeVertNormals(verts, faces){
-	var vertNormals = {};
-	for(var i = 0; i < faces.length; i++){
-		
-	}
-}
-
 function getNeighborFaces(i, faces){
 
 }
@@ -79,7 +163,7 @@ function makeVertName(x,y,z){
 
 function vertIter(verts, cb){
 	for(var i = 0; i < verts.length; i+=3){
-		cb.call(this, verts[i], verts[i+1], verts[i+2]);
+		cb.call(this, i/3, verts[i], verts[i+1], verts[i+2]);
 	}
 }
 
@@ -100,20 +184,6 @@ function isBoundary(verts, i){
 		if(nextX < currentX) return true;
 		return false;
 	}
-}
-
-function createMergedVerts(){
-	var merged = {}, key;
-	vertIter(verts, function(x,y,z){
-		key = makeVertName(x,y,z);
-		if(typeof merged[key] === 'undefined'){
-			merged[key] = {
-				faces: {}
-			};
-			// merged[key].faces[]
-			// var currentFaces = getFaces(i);
-		}
-	});
 }
 
 // i is a vertex index 

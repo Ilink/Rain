@@ -153,3 +153,11 @@ function getReflection(input, normal){
 	var top = vec3.scale(normal, doubled);
 	return vec3.subtract(top, input);
 }
+
+function buildArray(size){
+	var arr = [];
+	for(var i = 0; i < size; i++){
+		arr.push(null);
+	}
+	return arr;
+}
