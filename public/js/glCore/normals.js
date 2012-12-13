@@ -31,23 +31,31 @@ function calcFaceNormals(vertIndexes, verts){
 		console.log(edgeA, edgeB);
 		vec3.cross(edgeA, edgeB, normal);
 		faces.push(normal);
+		vec3.normalize(normal);
 
 		calculateWeightedNormal(vertA, vertB, vertC, normal, weightedNormalA);
 		vec3.normalize(weightedNormalA, weightedNormalA);
-		assignVertProperties(vertSet, a, faceIndex, weightedNormalA);
-		console.log('weightedA', weightedNormalA);
+		// assignVertProperties(vertSet, a, faceIndex, weightedNormalA);
+		assignVertProperties(vertSet, a, faceIndex, normal);
+		// console.log('weightedA', weightedNormalA);
 
 		calculateWeightedNormal(vertB, vertA, vertC, normal, weightedNormalB);
 		vec3.normalize(weightedNormalB, weightedNormalB);
-		assignVertProperties(vertSet, b, faceIndex, weightedNormalB);
-		console.log('weightedB', weightedNormalB);
+		// assignVertProperties(vertSet, b, faceIndex, weightedNormalB);
+		assignVertProperties(vertSet, b, faceIndex, normal);
+		// console.log('weightedB', weightedNormalB);
 
 		calculateWeightedNormal(vertC, vertB, vertA, normal, weightedNormalC);
 		vec3.normalize(weightedNormalC, weightedNormalC);
-		assignVertProperties(vertSet, c, faceIndex, weightedNormalC);
+		// assignVertProperties(vertSet, c, faceIndex, weightedNormalC);
+
+		assignVertProperties(vertSet, c, faceIndex, normal);
 		console.log('weightedC', weightedNormalC);
 
 	});
+
+	calculateSimpleNormalAvg(vertSet);
+
 	return {
 		faces: faces,
 		vertProperties: vertSet
@@ -74,7 +82,18 @@ function calculateWeightedNormal(targetVert, vertA, vertB, normal, destinationVe
 	avgAngle = 1.0 / avgAngle;
 	if(avgAngle < 0) avgAngle = 0;
 	vec3.scale(normal, avgAngle, destinationVec);
-	console.log(normal, avgAngle, destinationVec);
+}
+
+function calculateSimpleNormalAvg(vertSet){
+	$.each(vertSet, function(i, vert){
+		var total = vec3.create();
+		vert.normal = vec3.create();
+		$.each(vert.normals, function(i, normal){
+			vec3.add(normal, total, total);
+		});
+		// note this is component-wise division
+		vec3.scale(total, 1.0/vert.normals.length, vert.normal);
+	});
 }
 
 /*
@@ -97,7 +116,6 @@ function getAngle(a, b){
 }
 
 function assignVertProperties(vertSet, vertIndex, faceIndex, normal){
-	console.log('normal', normal);
 	if(vertSet[vertIndex] === null){
 		vertSet[vertIndex] = {
 			faces: {},
