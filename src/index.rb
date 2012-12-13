@@ -17,4 +17,8 @@ class Ilink < Sinatra::Base
 		slim :rainSquid, :layout => :rainSquidLayout
 	end
 
+	get "/lighting" do
+		slim :lighting, :layout => :lightingLayout
+	end
+
 end
