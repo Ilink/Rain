@@ -52,6 +52,10 @@ function calcFaceNormals(vertIndexes, verts){
 		faces: faces,
 		vertProperties: vertSet
 	};
+	// $.each(vertSet, function(i, vert){
+		
+	// })
+	// return vertSet
 }
 
 /*

@@ -1,17 +1,14 @@
 <script id="phong_fs" type="x-shader/vertex"> 
  	precision mediump float;
-	attribute vec3 position;
-	attribute vec2 vertColor;
 
-	uniform mat4 uMVMatrix;
-	uniform mat4 uPMatrix;
+    // varying vec2 vTextureCoord;
+    varying vec3 vLightWeighting;
 
-	varying vec2 vertColorOut; // these happen to also be texture coordinates!
+    // uniform sampler2D uSampler;
 
-	void main(void) {
-	    vec3 transformedNormal = uNMatrix * aVertexNormal;
-		float directionalLightWeighting = max(dot(transformedNormal, uLightingDirection), 0.0);
-		vLightWeighting = uAmbientColor + uDirectionalColor * directionalLightWeighting;
-	}
+    void main(void) {
+        // vec4 textureColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+        gl_FragColor = vec4(vLightWeighting, 1.0);
+    }
 
 </script>

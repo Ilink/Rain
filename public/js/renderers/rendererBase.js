@@ -8,8 +8,9 @@ Make sure you 'call' this constructor here, or nothing will work!
 function RendererBase(args){
     if(typeof args !== 'undefined'){
         console.log(args)
-        this.gl = args.gl;
+        this.gl = args.gl || window.gl;
         this.shaderProgram = buildShaderProgram(args.shaders);
+        console.log(this.shaderProgram);
         this.geo = [];
         this.resolution = this.gl.getUniformLocation(this.shaderProgram, 'resolution');
         this.uPMatrix = this.gl.getUniformLocation(this.shaderProgram, 'uPMatrix');
