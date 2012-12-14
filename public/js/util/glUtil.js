@@ -53,42 +53,79 @@ var geoPresets = {
         ]
     }, 
     box: function(width, height, depth){
+        // var verts = [
+        //     // Front face
+        //     0.0, 0.0,  depth,
+        //     width, 0.0,  depth,
+        //     width,  height,  depth,
+        //     0.0,  height,  depth,
+            
+        //     // Back face
+        //     0.0, 0.0, 0.0,
+        //     0.0,  height, 0.0,
+        //     width,  height, 0.0,
+        //     width, 0.0, 0.0,
+
+        //     // Top face
+        //     0.0, height, 0.0,
+        //     0.0, height,  depth,
+        //     width, height,  depth,
+        //     width, height, 0.0,
+
+        //     // Bottom face
+        //     0.0, 0.0, 0.0,
+        //     width, 0.0, 0.0,
+        //     width, 0.0,  depth,
+        //     0.0, 0.0,  depth,
+
+        //     // Right face
+        //     width, 0.0, 0.0,
+        //     width, height, 0.0,
+        //     width, height,  depth,
+        //     width, 0.0,  depth,
+
+        //     // Left face
+        //     0.0, 0.0, 0.0,
+        //     0.0, 0.0,  depth,
+        //     0.0,  height,  depth,
+        //     0.0,  height, 0.0,
+        // ];
         var verts = [
             // Front face
-            0.0, 0.0,  depth,
-            width, 0.0,  depth,
-            width,  height,  depth,
-            0.0,  height,  depth,
+            -1.0, -1.0,  1.0,
+             1.0, -1.0,  1.0,
+             1.0,  1.0,  1.0,
+            -1.0,  1.0,  1.0,
             
             // Back face
-            0.0, 0.0, 0.0,
-            0.0,  height, 0.0,
-            width,  height, 0.0,
-            width, 0.0, 0.0,
-
+            -1.0, -1.0, -1.0,
+            -1.0,  1.0, -1.0,
+             1.0,  1.0, -1.0,
+             1.0, -1.0, -1.0,
+            
             // Top face
-            0.0, height, 0.0,
-            0.0, height,  depth,
-            width, height,  depth,
-            width, height, 0.0,
-
+            -1.0,  1.0, -1.0,
+            -1.0,  1.0,  1.0,
+             1.0,  1.0,  1.0,
+             1.0,  1.0, -1.0,
+            
             // Bottom face
-            0.0, 0.0, 0.0,
-            width, 0.0, 0.0,
-            width, 0.0,  depth,
-            0.0, 0.0,  depth,
-
+            -1.0, -1.0, -1.0,
+             1.0, -1.0, -1.0,
+             1.0, -1.0,  1.0,
+            -1.0, -1.0,  1.0,
+            
             // Right face
-            width, 0.0, 0.0,
-            width, height, 0.0,
-            width, height,  depth,
-            width, 0.0,  depth,
-
+             1.0, -1.0, -1.0,
+             1.0,  1.0, -1.0,
+             1.0,  1.0,  1.0,
+             1.0, -1.0,  1.0,
+            
             // Left face
-            0.0, 0.0, 0.0,
-            0.0, 0.0,  depth,
-            0.0,  height,  depth,
-            0.0,  height, 0.0,
+            -1.0, -1.0, -1.0,
+            -1.0, -1.0,  1.0,
+            -1.0,  1.0,  1.0,
+            -1.0,  1.0, -1.0
         ];
         var indexes = [
             0,1,2,      0,2,3,      // front

@@ -19,7 +19,7 @@
 	    gl_Position = uPMatrix * uMVMatrix * vec4(position, 1.0);
 	    vec3 transformedNormal = normalMatrix * vertexNormal;
         float directionalLightWeighting = max(dot(transformedNormal, vec3(0,1,0)), 0.0);
-        vLightWeighting = vec3(255,50,0) * directionalLightWeighting;
+        vLightWeighting = vec3(255,50,0) + directionalLightWeighting;
 	}
 
 </script>

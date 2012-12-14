@@ -11,6 +11,8 @@ function BoxRenderer(shaders, textures){
     var vertColor;
     var position;
     var normalMatrix = mat3.create();
+    var rotAngle = 0.01;
+    var currentRot = 0.0;
     
     function setup_shaders() {
         position = gl.getAttribLocation(self.shaderProgram, "position");
@@ -28,9 +30,13 @@ function BoxRenderer(shaders, textures){
             gl.enableVertexAttribArray(vertexNormal);
     }
 
-    var cube = geoPresets.box(1,1,1);
+    var cube = geoPresets.box(10,10,1);
     console.log(cube.indexesBuffer.glBuffer, cube.normalsBuffer.glBuffer, cube.vertsBuffer.glBuffer);
     function build(dim, pMatrix, pMatrixInv){
+        mat4.identity(mvMatrix);
+        mat4.translate(mvMatrix, [0,0,-6], mvMatrix);
+        currentRot += rotAngle;
+        mat4.rotate(mvMatrix, currentRot, [0,1,0], mvMatrix);
         self.__setDefaultUniforms(self.shaderProgram, pMatrix, mvMatrix, dim);
 
         // I think this reverses the direction of the of the vector, which is more suitable for lighting equations
