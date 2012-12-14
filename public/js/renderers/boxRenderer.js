@@ -32,7 +32,6 @@ function BoxRenderer(shaders, textures){
     console.log(cube.indexesBuffer.glBuffer, cube.normalsBuffer.glBuffer, cube.vertsBuffer.glBuffer);
     function build(dim, pMatrix, pMatrixInv){
         self.__setDefaultUniforms(self.shaderProgram, pMatrix, mvMatrix, dim);
-        gl.uniformMatrix4fv(normalMatrixU, false, normalMatrix);
 
         // I think this reverses the direction of the of the vector, which is more suitable for lighting equations
         mat4.toInverseMat3(mvMatrix, normalMatrix);
