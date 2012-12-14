@@ -39,13 +39,13 @@ function BoxRenderer(shaders, textures){
         mat3.transpose(normalMatrix);
         gl.uniformMatrix3fv(normalMatrixU, false, normalMatrix);
 
-        gl.bindBuffer(gl.ARRAY_BUFFER, cube.normalsGlBuffer);
+        gl.bindBuffer(gl.ARRAY_BUFFER, cube.normalsBuffer.glBuffer);
         gl.vertexAttribPointer(vertexNormal, 3, gl.FLOAT, false, 0, 0);
 
-        gl.bindBuffer(gl.ARRAY_BUFFER, cube.vertsGlBuffer);
-        gl.vertexAttribPointer(position, cube.vertsGlBuffer.length/3.0, gl.FLOAT, false, 0, 0);
+        gl.bindBuffer(gl.ARRAY_BUFFER, cube.vertsBuffer.glBuffer);
+        gl.vertexAttribPointer(position, cube.vertsBuffer.numItems, gl.FLOAT, false, 0, 0);
 
-        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cube.indexesGlBuffer);
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cube.indexesBuffer.glBuffer);
         // Draw from previously bound indexes into bound vertexes
         gl.drawElements(gl.TRIANGLES, 36, gl.UNSIGNED_SHORT, 0);
     }

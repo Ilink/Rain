@@ -138,13 +138,24 @@ var geoPresets = {
         return {
             verts: verts,
             indexes: indexes,
-            vertsGlBuffer: makeGeoBuffer(verts, 3),
-            indexesGlBuffer: makeGeoBuffer(indexes, 3),
-            normalsGlBuffer: makeGeoBuffer(normals, 3),
+            vertsBuffer: makeGeoBuffer(verts, 3),
+            indexesBuffer: makeGeoBuffer(indexes, 3),
+            normalsBuffer: makeGeoBuffer(normals, 3),
             normals: normals
         }
     }
 };
+
+function makeIndexBuffer(verts){
+    var buffer = {};
+    var glBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, glBuffer);
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Float32Array(verts), gl.STATIC_DRAW);
+    buffer.itemSize = itemSize;
+    buffer.numItems = verts.length / 3;
+    buffer.glBuffer = glBuffer;
+    return buffer;
+}
 
 function makeGeoBuffer(verts, itemSize){
     var buffer = {};
