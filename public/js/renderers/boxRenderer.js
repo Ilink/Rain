@@ -29,7 +29,7 @@ function BoxRenderer(shaders, textures){
     }
 
     var cube = geoPresets.box(1,1,1);
-    console.log(cube);
+    console.log(cube.indexesBuffer.glBuffer, cube.normalsBuffer.glBuffer, cube.vertsBuffer.glBuffer);
     function build(dim, pMatrix, pMatrixInv){
         self.__setDefaultUniforms(self.shaderProgram, pMatrix, mvMatrix, dim);
         gl.uniformMatrix4fv(normalMatrixU, false, normalMatrix);
@@ -43,7 +43,7 @@ function BoxRenderer(shaders, textures){
         gl.vertexAttribPointer(vertexNormal, 3, gl.FLOAT, false, 0, 0);
 
         gl.bindBuffer(gl.ARRAY_BUFFER, cube.vertsBuffer.glBuffer);
-        gl.vertexAttribPointer(position, cube.vertsBuffer.numItems, gl.FLOAT, false, 0, 0);
+        gl.vertexAttribPointer(position, 3, gl.FLOAT, false, 0, 0);
 
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cube.indexesBuffer.glBuffer);
         // Draw from previously bound indexes into bound vertexes
@@ -54,8 +54,13 @@ function BoxRenderer(shaders, textures){
 
     this.render = function(time, dim, pMatrix, pMatrixInv) {
         gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-        // build(dim, pMatrix, pMatrixInv);
+        build(dim, pMatrix, pMatrixInv);
     };
+
+    $(document).on('engineTick', function(e, time, dim, pMatrix, pMatrixInv){
+        gl.useProgram(self.shaderProgram);
+        self.render(time, dim, pMatrix, pMatrixInv);
+    });
 }
 
 BoxRenderer.prototype = new RendererBase();

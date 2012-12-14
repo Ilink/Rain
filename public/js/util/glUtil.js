@@ -150,7 +150,7 @@ function makeIndexBuffer(verts){
     var buffer = {};
     var glBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, glBuffer);
-    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Float32Array(verts), gl.STATIC_DRAW);
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(verts), gl.STATIC_DRAW);
     buffer.itemSize = 3;
     buffer.numItems = verts.length / 3;
     buffer.glBuffer = glBuffer;
