@@ -6,6 +6,6 @@ require File.join(File.dirname(__FILE__), '../src/index')
 # $stderr.reopen(log)
 # $loggy = File.new("../log/loggy.log", "a+")
 
-run Sinatra::Application
+#run Sinatra::Application
 
-#run Ilink
+run Ilink
