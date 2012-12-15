@@ -127,6 +127,7 @@ var geoPresets = {
             -1.0,  1.0,  1.0,
             -1.0,  1.0, -1.0
         ];
+        
         var indexes = [
             0,1,2,      0,2,3,      // front
             4,5,6,      4,6,7,      // back
@@ -135,6 +136,7 @@ var geoPresets = {
             16,17,18,   16,18,19,   // right
             20,21,22,   20,22,23    // left
         ];
+
         var normals = [
             // Front
             0.0,  0.0,  1.0,
