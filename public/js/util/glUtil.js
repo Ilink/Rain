@@ -127,7 +127,7 @@ var geoPresets = {
             -1.0,  1.0,  1.0,
             -1.0,  1.0, -1.0
         ];
-        
+
         var indexes = [
             0,1,2,      0,2,3,      // front
             4,5,6,      4,6,7,      // back
@@ -174,6 +174,10 @@ var geoPresets = {
             -1.0,  0.0,  0.0,
             -1.0,  0.0,  0.0
         ];
+
+        _normals = calcFaceNormals(verts, indexes);
+        console.log(_normals, normals);
+
         return {
             verts: verts,
             indexes: indexes,
