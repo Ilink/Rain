@@ -29,7 +29,7 @@ function calcFaceNormals(vertIndexes, verts){
 		vec3.subtract(vecB, vecA, edgeA);
 		vec3.subtract(vecC, vecA, edgeB);
 
-		vec3.cross(edgeB, edgeA, normal);
+		vec3.cross(edgeA, edgeB, normal);
 		faces.push(normal);
 		vec3.normalize(normal);
 
