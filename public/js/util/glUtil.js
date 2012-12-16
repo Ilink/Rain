@@ -175,7 +175,7 @@ var geoPresets = {
             -1.0,  0.0,  0.0
         ];
 
-        _normals = calcFaceNormals(verts, indexes);
+        _normals = calcFaceNormals(indexes, verts);
         console.log(_normals, normals);
 
         return {

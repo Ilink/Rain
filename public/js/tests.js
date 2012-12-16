@@ -17,8 +17,8 @@ rect.verts[5] = -50;
 
 // rect.verts[5] = 25;
 // rect.verts[11] = 50;
-var faceNormals = calcFaceNormals(rect.indexes, rect.verts);
-console.log('face normals: ', faceNormals);
+// var faceNormals = calcFaceNormals(rect.indexes, rect.verts);
+// console.log('face normals: ', faceNormals);
 
 
 // Reflection vector tests

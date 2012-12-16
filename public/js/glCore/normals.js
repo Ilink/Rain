@@ -16,6 +16,7 @@ function calcFaceNormals(vertIndexes, verts){
 
 	// iterator goes over a set of vertex indexes that will form a triangle
 	vertIter(vertIndexes, function(faceIndex, a, b, c){
+		// this is getting negative indexs...whyyyyy
 		var normal = vec3.create();
 		vertA = getVert(verts, a);
 		vecA.set([vertA[0], vertA[1], vertA[2]]);
@@ -101,7 +102,7 @@ function calculateSimpleNormalAvg(vertSet){
 this could be sped up to avoid extra square roots
 http://stackoverflow.com/questions/9200723/efficient-way-to-get-the-angle-between-two-vectors-in-a-single-plane
 
-this one has one less square root, i think
+this one has one less square root
 float xz = x*x + z*z, y11 = y1*y1, y12 = y1*y2, y22 = y2*y2;
 
 float cosangle = (xz + y12) / sqrt((xz + y11) * (xz + y22));
@@ -116,14 +117,19 @@ function getAngle(a, b){
 	return Math.acos(dot / (magA * magB));
 }
 
+/*
+Assign faces and their corresponding normals to vertexes.
+*/
 function assignVertProperties(vertSet, vertIndex, faceIndex, normal){
 	if(vertSet[vertIndex] === null){
+		// set up a new object, initialization of the array does not provide this
 		vertSet[vertIndex] = {
 			faces: {},
 			normals: [normal]
 		}
 		vertSet[vertIndex].faces[faceIndex] = true;
 	} else {
+		// why is vertIndex -1?
 		var currentVert = vertSet[vertIndex];
 		if(typeof currentVert.faces[faceIndex] === 'undefined'){
 			currentVert.faces[faceIndex] = true;
