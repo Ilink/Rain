@@ -39,7 +39,26 @@ function BoxRenderer(shaders, textures){
         mat4.rotate(mvMatrix, currentRot, [0,1,0], mvMatrix);
         self.__setDefaultUniforms(self.shaderProgram, pMatrix, mvMatrix, dim);
 
-        // I think this reverses the direction of the of the vector, which is more suitable for lighting equations
+        /*
+        i really dont understand this part.
+        Inverts the upper 3 of the transform matrix.
+        Upper 3 would discard the offset part
+        i think transpose would reverse the direction of the transformations
+        
+        i guess the intention is to get the scale/rotation transforms
+        and apply those to the normal. BUT WHY?!
+        whyyyyyyy
+        and why invert it in the first place
+        
+        mysteries:
+            => inversion
+            => transposition
+        makes sense, kind of
+            => disregarding the offset part of the transform matrix
+
+        what is the geometric intepretation of an inversion?
+        maybe the transposition makes sense after the inversion    
+        */
         mat4.toInverseMat3(mvMatrix, normalMatrix);
         mat3.transpose(normalMatrix);
         gl.uniformMatrix3fv(normalMatrixU, false, normalMatrix);
