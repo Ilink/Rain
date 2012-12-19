@@ -175,12 +175,12 @@ var geoPresets = {
             -1.0,  0.0,  0.0
         ];
 
-        _normals = calcFaceNormals(indexes, verts);
-        var normals = [];
-        $.each(_normals.vertProperties, function(i, v){
-            normals.push(v.normal[0], v.normal[1], v.normal[2]);
-        });
-        console.log(_normals, normals);
+        // _normals = calcFaceNormals(indexes, verts);
+        // var normals = [];
+        // $.each(_normals.vertProperties, function(i, v){
+        //     normals.push(v.normal[0], v.normal[1], v.normal[2]);
+        // });
+        // console.log(_normals, normals);
 
         return {
             verts: verts,

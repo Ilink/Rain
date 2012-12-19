@@ -16,22 +16,22 @@ function BoxRenderer(shaders, textures){
     
     function setup_shaders() {
         position = gl.getAttribLocation(self.shaderProgram, "position");
-        if(position > -1)
-            gl.enableVertexAttribArray(position);
+        gl.enableVertexAttribArray(position);
 
         textureCoordAttribute = gl.getAttribLocation(self.shaderProgram, "aTextureCoord");
-        if(textureCoordAttribute > -1)
-            gl.enableVertexAttribArray(textureCoordAttribute);
+        gl.enableVertexAttribArray(textureCoordAttribute);
 
         normalMatrixU = gl.getUniformLocation(self.shaderProgram, "normalMatrix");
 
-        vertexNormal = gl.getUniformLocation(self.shaderProgram, "vertexNormal");
-        if(vertexNormal > -1)
-            gl.enableVertexAttribArray(vertexNormal);
+        vertexNormal = gl.getAttribLocation(self.shaderProgram, "vertexNormal");
+        gl.enableVertexAttribArray(vertexNormal);
     }
 
     var cube = geoPresets.box(10,10,1);
     console.log(cube.indexesBuffer.glBuffer, cube.normalsBuffer.glBuffer, cube.vertsBuffer.glBuffer);
+    
+    setup_shaders();
+
     function build(dim, pMatrix, pMatrixInv){
         mat4.identity(mvMatrix);
         mat4.translate(mvMatrix, [0,0,-6], mvMatrix);
@@ -58,11 +58,19 @@ function BoxRenderer(shaders, textures){
 
         what is the geometric intepretation of an inversion?
         maybe the transposition makes sense after the inversion    
+
+
+
+        we cant just use the transofrmation matrix directly becuase it would change the length and/or rotation of the normal
+        we must have unit-length normals
+        http://www.lighthouse3d.com/tutorials/glsl-tutorial/the-normal-matrix/
         */
         mat4.toInverseMat3(mvMatrix, normalMatrix);
         mat3.transpose(normalMatrix);
         gl.uniformMatrix3fv(normalMatrixU, false, normalMatrix);
 
+        // this breaks on...windows...
+        // something is off? it doesn't register properly or something
         gl.bindBuffer(gl.ARRAY_BUFFER, cube.normalsBuffer.glBuffer);
         gl.vertexAttribPointer(vertexNormal, 3, gl.FLOAT, false, 0, 0);
 
@@ -74,7 +82,7 @@ function BoxRenderer(shaders, textures){
         gl.drawElements(gl.TRIANGLES, 36, gl.UNSIGNED_SHORT, 0);
     }
 
-    setup_shaders();
+    
 
     this.render = function(time, dim, pMatrix, pMatrixInv) {
         gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
