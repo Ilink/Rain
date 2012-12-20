@@ -18,8 +18,8 @@ function BoxRenderer(shaders, textures){
         position = gl.getAttribLocation(self.shaderProgram, "position");
         gl.enableVertexAttribArray(position);
 
-        textureCoordAttribute = gl.getAttribLocation(self.shaderProgram, "aTextureCoord");
-        gl.enableVertexAttribArray(textureCoordAttribute);
+        // textureCoordAttribute = gl.getAttribLocation(self.shaderProgram, "aTextureCoord");
+        // gl.enableVertexAttribArray(textureCoordAttribute);
 
         normalMatrixU = gl.getUniformLocation(self.shaderProgram, "normalMatrix");
 
