@@ -40,29 +40,6 @@ function BoxRenderer(shaders, textures){
         self.__setDefaultUniforms(self.shaderProgram, pMatrix, mvMatrix, dim);
 
         /*
-        i really dont understand this part.
-        Inverts the upper 3 of the transform matrix.
-        Upper 3 would discard the offset part
-        i think transpose would reverse the direction of the transformations
-        
-        i guess the intention is to get the scale/rotation transforms
-        and apply those to the normal. BUT WHY?!
-        whyyyyyyy
-        and why invert it in the first place
-        
-        mysteries:
-            => inversion
-            => transposition
-        makes sense, kind of
-            => disregarding the offset part of the transform matrix
-
-        what is the geometric intepretation of an inversion?
-        maybe the transposition makes sense after the inversion    
-
-
-
-        we cant just use the transofrmation matrix directly becuase it would change the length and/or rotation of the normal
-        we must have unit-length normals
         http://www.lighthouse3d.com/tutorials/glsl-tutorial/the-normal-matrix/
         */
         mat4.toInverseMat3(mvMatrix, normalMatrix);
