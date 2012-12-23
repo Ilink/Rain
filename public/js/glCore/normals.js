@@ -3,6 +3,11 @@ function getVert(verts, i){
 	return [verts[i], verts[i+1], verts[i+2]];
 }
 
+/*
+Calculates normals
+Sort of icky the way it handles data but it works.
+Probably could be faster.
+*/
 function calcFaceNormals(vertIndexes, verts){
 	var vecA = vec3.create();
 	var vecB = vec3.create();
@@ -16,7 +21,6 @@ function calcFaceNormals(vertIndexes, verts){
 
 	// iterator goes over a set of vertex indexes that will form a triangle
 	vertIter(vertIndexes, function(faceIndex, a, b, c){
-		// this is getting negative indexs...whyyyyy
 		var normal = vec3.create();
 		vertA = getVert(verts, a);
 		vecA.set([vertA[0], vertA[1], vertA[2]]);
@@ -33,30 +37,19 @@ function calcFaceNormals(vertIndexes, verts){
 		faces.push(normal);
 		vec3.normalize(normal);
 
-		// calculateWeightedNormal(vertA, vertB, vertC, normal, weightedNormalA);
-		// vec3.normalize(weightedNormalA, weightedNormalA);
 		assignVertProperties(vertSet, a, faceIndex, normal);
-
-		// calculateWeightedNormal(vertB, vertA, vertC, normal, weightedNormalB);
-		// vec3.normalize(weightedNormalB, weightedNormalB);
 		assignVertProperties(vertSet, b, faceIndex, normal);
-
-		// calculateWeightedNormal(vertC, vertB, vertA, normal, weightedNormalC);
-		// vec3.normalize(weightedNormalC, weightedNormalC);
 		assignVertProperties(vertSet, c, faceIndex, normal);
-
 	});
 
 	calculateSimpleNormalAvg(vertSet);
 
-	return {
-		faces: faces,
-		vertProperties: vertSet
-	};
-	// $.each(vertSet, function(i, vert){
-		
-	// })
-	// return vertSet
+	var normals = [];
+	$.each(vertSet, function(i, v){
+	    normals.push(v.normal[0], v.normal[1], v.normal[2]);
+	});
+
+	return normals;
 }
 
 /*
@@ -96,6 +89,7 @@ function calculateSimpleNormalAvg(vertSet){
 		// note this is component-wise division
 		vec3.scale(total, 1.0/vert.normals.length, vert.normal);
 	});
+
 }
 
 /*

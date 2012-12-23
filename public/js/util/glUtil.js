@@ -175,12 +175,7 @@ var geoPresets = {
             -1.0,  0.0,  0.0
         ];
 
-        // _normals = calcFaceNormals(indexes, verts);
-        // var normals = [];
-        // $.each(_normals.vertProperties, function(i, v){
-        //     normals.push(v.normal[0], v.normal[1], v.normal[2]);
-        // });
-        // console.log(_normals, normals);
+        var normals = calcFaceNormals(indexes, verts);
 
         return {
             verts: verts,
@@ -189,6 +184,31 @@ var geoPresets = {
             indexesBuffer: makeIndexBuffer(indexes, 3),
             normalsBuffer: makeGeoBuffer(normals, 3),
             normals: normals
+        }
+    },
+    // thanks to some help from 
+    // http://stackoverflow.com/questions/7946770/calculating-a-sphere-in-opengl
+    sphere: function(radius, rings, sectors){
+        var pi2 = Math.PI*2;
+        var R = 1/rings-1;
+        var S = 1/sectors-1;
+        var verts = buildArray(rings*sectors*3);
+        var normals = buildArray(rings*sectors*3);
+        var x, y, z;
+
+        for(var r = 0; r < rings; r++){
+            for(var s = 0; s < sectors; s++){
+                y = Math.sin( -pi2 + Math.PI * r * R );
+                x = cos(pi2 * s * S) * sin( Math.PI * r * R );
+                z = sin(pi2 * s * S) * sin( Math.PI * r * R );
+
+                x*=radius;
+                y*=radius;
+                z*=radius;
+
+                normals.push(x,y,z);
+                verts.push(x,y,z);
+            }
         }
     }
 };
