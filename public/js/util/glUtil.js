@@ -192,24 +192,20 @@ var geoPresets = {
         var pi2 = Math.PI*2;
         var R = 1/rings-1;
         var S = 1/sectors-1;
-        var verts = buildArray(rings*sectors*3);
-        var normals = buildArray(rings*sectors*3);
+        var verts = [], normals = [];
         var x, y, z;
 
         for(var r = 0; r < rings; r++){
             for(var s = 0; s < sectors; s++){
-                y = Math.sin( -pi2 + Math.PI * r * R );
-                x = cos(pi2 * s * S) * sin( Math.PI * r * R );
-                z = sin(pi2 * s * S) * sin( Math.PI * r * R );
-
-                x*=radius;
-                y*=radius;
-                z*=radius;
+                y = radius * Math.sin( -pi2 + Math.PI * r * R );
+                x = radius * Math.cos(pi2 * s * S) * Math.sin( Math.PI * r * R );
+                z = radius * Math.sin(pi2 * s * S) * Math.sin( Math.PI * r * R );
 
                 normals.push(x,y,z);
                 verts.push(x,y,z);
             }
         }
+        return verts;
     }
 };
 

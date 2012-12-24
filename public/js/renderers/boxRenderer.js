@@ -28,7 +28,9 @@ function BoxRenderer(shaders, textures){
     }
 
     var cube = geoPresets.box(10,10,1);
-    console.log(cube.indexesBuffer.glBuffer, cube.normalsBuffer.glBuffer, cube.vertsBuffer.glBuffer);
+    var sphere = geoPresets.sphere(1,2,2);
+    console.log(sphere);
+    // console.log(cube.indexesBuffer.glBuffer, cube.normalsBuffer.glBuffer, cube.vertsBuffer.glBuffer);
     
     setup_shaders();
 
