@@ -30,6 +30,8 @@ function Terrain(params){
 	}
 
 	console.log(map);
+	// this transforms the map verts into a set of faces, all next to one another (in the array)
+	// the output of this function is the format expected by createIndexes
 	var faces = [];
 	faceIter(map, xDim, yDim, function(a,b,c,d){
 		faces.push(a,b,c,d);
@@ -38,21 +40,11 @@ function Terrain(params){
 	console.log(faces);
 
 	// face indices for drawing
+	// assembles vertex indexes from the faces, using CCW order
 	var faceIndexes = [];
 	for(var i = 0; i < faces.length/3.0; i+=4){
 		faceIndexes.push(i,i+1,i+2);
 		faceIndexes.push(i,i+2,i+3);
-	}
-
-	// this transforms the map verts into a set of faces, all next to one another (in the array)
-	// the output of this function is the format expected by createIndexes
-	function createFaces(){
-
-	}
-
-	// assembles vertex indexes from the faces, using CCW order
-	function createIndexes(){
-
 	}
 
 	function faceIter(verts, xDim, yDim, cb){
