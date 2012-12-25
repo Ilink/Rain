@@ -37,6 +37,14 @@ function Terrain(params){
 	console.log(faces.length, map.length);
 	console.log(faces);
 
+	// face indices for drawing
+	var faceIndexes = [];
+	for(var i = 0; i < faces.length; i+=4){
+		faceIndexes.push(i,i+1,i+2);
+		faceIndexes.push(i,i+2,i+3);
+	}
+	console.log(faceIndexes);
+
 	// this transforms the map verts into a set of faces, all next to one another (in the array)
 	// the output of this function is the format expected by createIndexes
 	function createFaces(){
@@ -55,14 +63,16 @@ function Terrain(params){
 			// if we're on the last row, we're done
 			if(i >= verts.length - xDim-2) return;
 			if(rowCount === xDim){
-				console.log('row count reset at', rowCount);
-				rowCount = 0;
-				
+				rowCount = 0;				
 			} else {
-				cb(i, i+xDim, i+xDim+1, i+1);
-				// cb(verts[i], verts[i+xDim], verts[i+xDim+1], verts[i+1]);
+				// cb(i, i+xDim, i+xDim+1, i+1);
+				cb(verts[i], verts[i+xDim], verts[i+xDim+1], verts[i+1]);
 			}
 		}
 	}
+
+    this.vertsBuffer = makeBuffer(faces, 3)
+	this.indexesBuffer = makeIndexBuffer(faceIndexes, 3)
+	// this.normalsBuffer = makeGeoBuffer(normals, 3)
 }
 

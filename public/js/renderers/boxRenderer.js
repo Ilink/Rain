@@ -29,6 +29,7 @@ function BoxRenderer(shaders, textures){
 
     var cube = geoPresets.box(10,10,1);
     var sphere = geoPresets.sphere(1,2,2);
+    var terrain = new Terrain({yDim: 2, xDim: 4});
     console.log(sphere);
     // console.log(cube.indexesBuffer.glBuffer, cube.normalsBuffer.glBuffer, cube.vertsBuffer.glBuffer);
     
@@ -48,15 +49,15 @@ function BoxRenderer(shaders, textures){
         mat3.transpose(normalMatrix);
         gl.uniformMatrix3fv(normalMatrixU, false, normalMatrix);
 
-        // this breaks on...windows...
-        // something is off? it doesn't register properly or something
         gl.bindBuffer(gl.ARRAY_BUFFER, cube.normalsBuffer.glBuffer);
         gl.vertexAttribPointer(vertexNormal, 3, gl.FLOAT, false, 0, 0);
 
-        gl.bindBuffer(gl.ARRAY_BUFFER, cube.vertsBuffer.glBuffer);
+        // gl.bindBuffer(gl.ARRAY_BUFFER, cube.vertsBuffer.glBuffer);
+        gl.bindBuffer(gl.ARRAY_BUFFER, terrain.vertsBuffer.glBuffer);
         gl.vertexAttribPointer(position, 3, gl.FLOAT, false, 0, 0);
 
-        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cube.indexesBuffer.glBuffer);
+        // gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cube.indexesBuffer.glBuffer);
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, terrain.indexesBuffer.glBuffer);
         // Draw from previously bound indexes into bound vertexes
         gl.drawElements(gl.TRIANGLES, 36, gl.UNSIGNED_SHORT, 0);
     }
