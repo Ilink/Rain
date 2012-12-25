@@ -39,11 +39,13 @@ function Terrain(params){
 
 	// face indices for drawing
 	var faceIndexes = [];
-	for(var i = 0; i < faces.length; i+=4){
+	for(var i = 0; i < faces.length/3.0; i+=4){
 		faceIndexes.push(i,i+1,i+2);
 		faceIndexes.push(i,i+2,i+3);
 	}
 	console.log(faceIndexes);
+	// the correct ratio is 2:1 (indexes:faces), but this is something else. Which means something is wrongggg
+	console.log('terrain length:', faceIndexes.length, faces.length);
 
 	// this transforms the map verts into a set of faces, all next to one another (in the array)
 	// the output of this function is the format expected by createIndexes
