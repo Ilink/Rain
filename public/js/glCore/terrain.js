@@ -25,7 +25,7 @@ function Terrain(params){
 	for(j=0; j < yDim; j++){
 		for(i=0; i < xDim; i++){
 			h = noise.noise(i,j);
-			map.push(i,j,h);
+			map.push(h,j,i);
 		}
 	}
 
@@ -43,9 +43,6 @@ function Terrain(params){
 		faceIndexes.push(i,i+1,i+2);
 		faceIndexes.push(i,i+2,i+3);
 	}
-	console.log(faceIndexes);
-	// the correct ratio is 2:1 (indexes:faces), but this is something else. Which means something is wrongggg
-	console.log('terrain length:', faceIndexes.length, faces.length);
 
 	// this transforms the map verts into a set of faces, all next to one another (in the array)
 	// the output of this function is the format expected by createIndexes
@@ -67,12 +64,12 @@ function Terrain(params){
 			if(rowCount === xDim){
 				rowCount = 0;				
 			} else {
-				// cb(i, i+xDim, i+xDim+1, i+1);
 				cb(verts[i], verts[i+xDim], verts[i+xDim+1], verts[i+1]);
 			}
 		}
 	}
 
+	this.faces = faces;
     this.vertsBuffer = makeBuffer(faces, 3)
 	this.indexesBuffer = makeIndexBuffer(faceIndexes, 3)
 	// this.normalsBuffer = makeGeoBuffer(normals, 3)

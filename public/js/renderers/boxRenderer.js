@@ -29,8 +29,9 @@ function BoxRenderer(shaders, textures){
 
     var cube = geoPresets.box(10,10,1);
     var sphere = geoPresets.sphere(1,2,2);
-    var terrain = new Terrain({yDim: 2, xDim: 4});
-    console.log(sphere);
+    var terrain = new Terrain({yDim: 2, xDim: 13});
+    var numTris = terrain.faces.length/3;
+    console.log(terrain.faces.length/4*2);
     // console.log(cube.indexesBuffer.glBuffer, cube.normalsBuffer.glBuffer, cube.vertsBuffer.glBuffer);
     
     setup_shaders();
@@ -59,7 +60,7 @@ function BoxRenderer(shaders, textures){
         // gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cube.indexesBuffer.glBuffer);
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, terrain.indexesBuffer.glBuffer);
         // Draw from previously bound indexes into bound vertexes
-        gl.drawElements(gl.TRIANGLES, 36, gl.UNSIGNED_SHORT, 0);
+        gl.drawElements(gl.TRIANGLES, numTris, gl.UNSIGNED_SHORT, 0);
     }
 
     
