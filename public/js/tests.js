@@ -45,3 +45,11 @@ for(var i = 0; i < size / chunkSize; i++){
     // console.log(chunk);
 }
 // console.log(allocator.get());
+
+// Noise
+var noise = new SimplexNoise();
+var noiseMap = noise.noise3d(10,0,1);
+console.log(noiseMap);
+
+// Terrain
+var terrain = new Terrain({yDim: 2, xDim: 4});
