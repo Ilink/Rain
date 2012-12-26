@@ -29,10 +29,9 @@ function BoxRenderer(shaders, textures){
 
     var cube = geoPresets.box(10,10,1);
     var sphere = geoPresets.sphere(1,2,2);
-    var terrain = new Terrain({yDim: 2, xDim: 13});
-    var numTris = terrain.faces.length/4;
-    // console.log(terrain.faces.length/4);
-    // console.log(cube.indexesBuffer.glBuffer, cube.normalsBuffer.glBuffer, cube.vertsBuffer.glBuffer);
+    var terrain = new Terrain({yDim:4, xDim: 4});
+    var numTris = terrain.indexes.length;
+    // var numTris = 50
     
     setup_shaders();
 

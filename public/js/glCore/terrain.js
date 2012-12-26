@@ -24,18 +24,14 @@ function Terrain(params){
 	var map = []; // flat because fuck 2d arrays
 	for(j=0; j < yDim; j++){
 		for(i=0; i < xDim; i++){
-			h = noise.noise(i,j);
-			map.push(j,h,i);
+			h = Math.abs(noise.noise(i,j));
+			map.push(j,i/2,h*2);
 		}
 	}
 
 	// this transforms the map verts into a set of faces, all next to one another (in the array)
-<<<<<<< HEAD
 	// the output of this function is the format expected by createIndexes
-	var faces = [];
-	faceIter(map, xDim, yDim, function(a,b,c,d){
-		faces.push(a,b,c,d);
-	});
+	var faces = transformFaces(map, xDim, yDim);
 	// console.log(faces.length, map.length);
 	console.log(faces);
 
@@ -47,40 +43,55 @@ function Terrain(params){
 		faceIndexes.push(i,i+2,i+3);
 	}
 
+	// i believe this step is wrong!
 	function transformFaces(verts, xDim, yDim){
 		var faces = [];
+		var width = xDim * 3;
+		var height = yDim * 3;
 		var rowCount = 0;
-		for(var i = 0; i < verts.length/3; i+=12){
+		for(var i = 0; i < verts.length/3; i+=3){
 			rowCount++;
 			// if we're on the last row, we're done
 			if(i >= verts.length - xDim-2) return;
+			// faces.push(verts[i], verts[i+1],verts[i+2], 
+			// 		   verts[i+width], verts[i+width+1], verts[i+width+2], 
+			// 		   verts[i+width+3], verts[i+width+4], verts[i+width+5], 
+			// 		   verts[i+3], verts[i+4], verts[i+5]);
+
+			// faces.push(verts[i], verts[i+1],verts[i+2], 
+			// 		   verts[i+3], verts[i+4],verts[i+5],
+			// 		   verts[i+6], verts[i+7],verts[i+8],
+			// 		   verts[i+9], verts[i+10],verts[i+11]);
+
 			if(rowCount === xDim){
 				rowCount = 0;				
 			} else {
 				faces.push(verts[i], verts[i+1],verts[i+2], 
-						   verts[i+xDim], verts[i+xDim+3], verts[i+xDim+2], 
-						   verts[i+xDim+3], verts[i+xDim+4], verts[i+xDim+5], 
+						   verts[i+width], verts[i+width+1], verts[i+width+2], 
+						   verts[i+width+3], verts[i+width+4], verts[i+width+5], 
 						   verts[i+3], verts[i+4], verts[i+5]);
 			}
 		}
 		return faces;
 	}
 
-	console.log(map);
+	console.log('map:',map);
 	var faces = [];
 	faces = transformFaces(map, xDim, yDim)
 	console.log('faces length',faces.length, 'noise map length',map.length);
-	console.log(faces);
+	console.log('faces:',faces);
 
 	// face indices for drawing
 	// assembles vertex indexes from the faces, using CCW order
 	var faceIndexes = [];
-	for(var i = 0; i < faces.length/3.0; i+=4){
+	for(var i = 0; i < faces.length/3; i+=4){
 		faceIndexes.push(i,i+1,i+2);
 		faceIndexes.push(i,i+2,i+3);
 	}
+	console.log('face indexes:', faceIndexes);
 
 	this.faces = faces;
+	this.indexes = faceIndexes;
     this.vertsBuffer = makeBuffer(faces, 3)
 	this.indexesBuffer = makeIndexBuffer(faceIndexes, 3)
 	// this.normalsBuffer = makeGeoBuffer(normals, 3)
