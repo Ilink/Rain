@@ -5,6 +5,11 @@
 
 	void main(void) {
 	    // gl_Position = uPMatrix * uMVMatrix * vec4(position, 1.0);
-	    gl_Position = vec4(position, 1.0);
+
+	    // gl_Position = vec4(position, 1.0);
+
+
+	    vec4 vPosition = uMVMatrix * vec4(position, 1.0);
+	    gl_Position = uPMatrix * vPosition;
 	}
 </script>

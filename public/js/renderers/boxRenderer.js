@@ -29,9 +29,9 @@ function BoxRenderer(shaders, textures){
 
     var cube = geoPresets.box(10,10,1);
     var sphere = geoPresets.sphere(1,2,2);
-    var terrain = new Terrain({yDim:4, xDim: 4});
-    var numTris = terrain.indexes.length;
-    // var numTris = 50
+    var terrain = new Terrain({yDim:10, xDim: 6});
+    var numTris = terrain.faces.length/3;
+    // var numTris = 27;
     
     setup_shaders();
 
@@ -47,10 +47,10 @@ function BoxRenderer(shaders, textures){
         */
         mat4.toInverseMat3(mvMatrix, normalMatrix);
         mat3.transpose(normalMatrix);
-        gl.uniformMatrix3fv(normalMatrixU, false, normalMatrix);
+        // gl.uniformMatrix3fv(normalMatrixU, false, normalMatrix);
 
         gl.bindBuffer(gl.ARRAY_BUFFER, cube.normalsBuffer.glBuffer);
-        gl.vertexAttribPointer(vertexNormal, 3, gl.FLOAT, false, 0, 0);
+        // gl.vertexAttribPointer(vertexNormal, 3, gl.FLOAT, false, 0, 0);
 
         // gl.bindBuffer(gl.ARRAY_BUFFER, cube.vertsBuffer.glBuffer);
         gl.bindBuffer(gl.ARRAY_BUFFER, terrain.vertsBuffer.glBuffer);
@@ -61,8 +61,6 @@ function BoxRenderer(shaders, textures){
         // Draw from previously bound indexes into bound vertexes
         gl.drawElements(gl.TRIANGLES, numTris, gl.UNSIGNED_SHORT, 0);
     }
-
-    
 
     this.render = function(time, dim, pMatrix, pMatrixInv) {
         gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
