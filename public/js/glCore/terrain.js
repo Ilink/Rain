@@ -36,7 +36,7 @@ function Terrain(params){
 	faceIter(map, xDim, yDim, function(a,b,c,d){
 		faces.push(a,b,c,d);
 	});
-	console.log(faces.length, map.length);
+	// console.log(faces.length, map.length);
 	console.log(faces);
 
 	// face indices for drawing
@@ -56,7 +56,11 @@ function Terrain(params){
 			if(rowCount === xDim){
 				rowCount = 0;				
 			} else {
+				// this is wrong because it doesnt use verts, it uses vert indexes
+				// should be verts[i], verts[i+1], verts[i+2] for the first
+				// then verts[i+xDim] etc
 				cb(verts[i], verts[i+xDim], verts[i+xDim+1], verts[i+1]);
+				// cb(i, i+xDim, i+xDim+1,i+1);
 			}
 		}
 	}
