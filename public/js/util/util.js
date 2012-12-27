@@ -163,5 +163,5 @@ function buildArray(size){
 }
 
 function degToRad(deg){
-	
+	return deg * Math.PI / 180;
 }

@@ -27,6 +27,7 @@ function Engine(canvas){
     var boundaries;
     canvas = canvas[0];
 
+    // window.camera = new Camera();
     var camera = new Camera();
     camera.bindControls();
 
@@ -69,13 +70,7 @@ function Engine(canvas){
         
         $(document).trigger('engineTick', [parameters.time, 
                 {width: screenWidth, height: screenHeight}, 
-                pMatrix, pMatrixInv]);
-        $.each(renderers, function(i, renderer){
-            // gl.useProgram(renderer.shaderProgram);
-            // renderer.render(parameters.time, 
-            //     {width: screenWidth, height: screenHeight}, 
-            //     pMatrix, pMatrixInv);
-        });
+                pMatrix, pMatrixInv, camera.xforms]);
     });
 
     this.start = function(){
