@@ -42,9 +42,7 @@ function Camera(){
 		$document.mousemove(function(e){
 			self.xforms.yaw += (e.screenX - prevMousePos.x) * self.speed.mouse;
 			self.xforms.pitch += (e.screenY - prevMousePos.y) * self.speed.mouse;
-		
-			console.log(self.xforms.yaw, self.xforms.pitch);
-
+			
 			prevMousePos.x = e.screenX;
 			prevMousePos.y = e.screenY;
 		});
