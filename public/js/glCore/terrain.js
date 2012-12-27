@@ -25,7 +25,7 @@ function Terrain(params){
 	for(j=0; j < yDim; j++){
 		for(i=0; i < xDim; i++){
 			h = Math.abs(noise.noise(i,j));
-			map.push(j,i/2,h*2);
+			map.push(j,h*2,i/2);
 		}
 	}
 

@@ -29,7 +29,7 @@ function BoxRenderer(shaders, textures){
 
     var cube = geoPresets.box(10,10,1);
     var sphere = geoPresets.sphere(1,2,2);
-    var terrain = new Terrain({yDim:9, xDim: 9});
+    var terrain = new Terrain({yDim:90, xDim: 90});
     var numTris = terrain.faces.length/3;
     
     setup_shaders();
@@ -39,7 +39,7 @@ function BoxRenderer(shaders, textures){
         self.setFromCamera(mvMatrix, cameraXforms);
         mat4.translate(mvMatrix, [0,0,-6], mvMatrix);
         currentRot += rotAngle;
-        mat4.rotate(mvMatrix, currentRot, [0,1,0], mvMatrix);
+        // mat4.rotate(mvMatrix, currentRot, [0,1,0], mvMatrix);
         self.setDefaultUniforms(self.shaderProgram, pMatrix, mvMatrix, dim);
 
         /*
