@@ -161,3 +161,7 @@ function buildArray(size){
 	}
 	return arr;
 }
+
+function degToRad(deg){
+	
+}

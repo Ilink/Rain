@@ -41,3 +41,9 @@ RendererBase.prototype.addGeo = function(verts, mat, textureName){
     this.geo.push(geo);
     return geo;
 }
+
+RendererBase.prototype.setFromCamera = function(mvMatrix, xforms){
+    mat4.rotate(mvMatrix, degToRad(-xforms.pitch), [1, 0, 0]);
+    mat4.rotate(mvMatrix, degToRad(-xforms.yaw), [0, 1, 0]);
+    mat4.translate(mvMatrix, [-xforms.x, -xforms.y, -xforms.z]);
+}

@@ -27,6 +27,9 @@ function Engine(canvas){
     var boundaries;
     canvas = canvas[0];
 
+    var camera = new Camera();
+    camera.bindControls();
+
     function to_clip_space(){
         // implement me!
     }
