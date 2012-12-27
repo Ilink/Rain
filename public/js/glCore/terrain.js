@@ -87,6 +87,7 @@ function Terrain(params){
 	this.indexes = faceIndexes;
     this.vertsBuffer = makeBuffer(faces, 3);
 	this.indexesBuffer = makeIndexBuffer(faceIndexes, 3);
-	// this.normalsBuffer = makeGeoBuffer(normals, 3);
+	this.normals = calcFaceNormals(faceIndexes, faces);
+	this.normalsBuffer = makeGeoBuffer(this.normals, 3);
 }
 

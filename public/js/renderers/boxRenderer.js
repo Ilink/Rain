@@ -29,9 +29,8 @@ function BoxRenderer(shaders, textures){
 
     var cube = geoPresets.box(10,10,1);
     var sphere = geoPresets.sphere(1,2,2);
-    var terrain = new Terrain({yDim:10, xDim: 6});
+    var terrain = new Terrain({yDim:9, xDim: 9});
     var numTris = terrain.faces.length/3;
-    // var numTris = 27;
     
     setup_shaders();
 
@@ -40,25 +39,21 @@ function BoxRenderer(shaders, textures){
         mat4.translate(mvMatrix, [0,0,-6], mvMatrix);
         currentRot += rotAngle;
         mat4.rotate(mvMatrix, currentRot, [0,1,0], mvMatrix);
-        self.__setDefaultUniforms(self.shaderProgram, pMatrix, mvMatrix, dim);
+        self.setDefaultUniforms(self.shaderProgram, pMatrix, mvMatrix, dim);
 
         /*
         http://www.lighthouse3d.com/tutorials/glsl-tutorial/the-normal-matrix/
         */
         mat4.toInverseMat3(mvMatrix, normalMatrix);
         mat3.transpose(normalMatrix);
-        // gl.uniformMatrix3fv(normalMatrixU, false, normalMatrix);
 
-        gl.bindBuffer(gl.ARRAY_BUFFER, cube.normalsBuffer.glBuffer);
-        // gl.vertexAttribPointer(vertexNormal, 3, gl.FLOAT, false, 0, 0);
+        gl.bindBuffer(gl.ARRAY_BUFFER, terrain.normalsBuffer.glBuffer);
+        gl.vertexAttribPointer(vertexNormal, 3, gl.FLOAT, false, 0, 0);
 
-        // gl.bindBuffer(gl.ARRAY_BUFFER, cube.vertsBuffer.glBuffer);
         gl.bindBuffer(gl.ARRAY_BUFFER, terrain.vertsBuffer.glBuffer);
         gl.vertexAttribPointer(position, 3, gl.FLOAT, false, 0, 0);
 
-        // gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cube.indexesBuffer.glBuffer);
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, terrain.indexesBuffer.glBuffer);
-        // Draw from previously bound indexes into bound vertexes
         gl.drawElements(gl.TRIANGLES, numTris, gl.UNSIGNED_SHORT, 0);
     }
 

@@ -25,7 +25,7 @@ function ParticlesRenderer(shaders, particleVerts){
     this.render = function(time, dim, pMatrix, pMatrixInv) {
         gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
         // gl.uniform2f(resolution, dim.width, dim.height);
-        self.__setDefaultUniforms(self.shaderProgram, pMatrix, mvMatrix, dim);
+        self.setDefaultUniforms(self.shaderProgram, pMatrix, mvMatrix, dim);
         particles.draw();
     };
 

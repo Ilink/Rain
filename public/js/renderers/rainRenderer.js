@@ -64,7 +64,7 @@ function RainRenderer(gl, shaders, rttShaders){
             mat4.identity(mvMatrix); // reset the position for each piece of geometry
             mat4.translate(mvMatrix, geo.trans);
 
-            self.__setDefaultUniforms(self.shaderProgram, pMatrix, mvMatrix, dim);
+            self.setDefaultUniforms(self.shaderProgram, pMatrix, mvMatrix, dim);
 
             // Textures
             if(typeof geo.texture !== 'undefined'){

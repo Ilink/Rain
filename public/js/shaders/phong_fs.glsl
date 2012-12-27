@@ -8,20 +8,22 @@
     void main(void) {
         vec3 color = vec3(0.5, 0.2, 0.1);
         vec3 specColor = vec3(0.1,0.5, 0.2);
-        vec3 diffuseColor = vec3(0.2, 0.1, 0.2);
+        vec3 diffuseColor = vec3(0.0, 0.0, 0.0);
 
+        // since we are in eye space
         vec3 eyeDirection = normalize(-vPosition.xyz);
-		vec3 directionalVector = vec3(0.85, 0.8, 0.75);
+		vec3 directionalVector = normalize(vec3(0.0, 10.0, 0.0));
 
         vec3 reflectionDirection = reflect(-directionalVector, vNormal);
         float specularLightWeighting = pow(max(dot(reflectionDirection, eyeDirection), 0.0), 1.0);
-        float diffuseLightWeighting = max(dot(vNormal, directionalVector), 0.0);
+        float diffuseLightWeighting = max(dot(vNormal, directionalVector), 0.0)*2.0;
 
         vec3 lightWeighting = color
                 + specColor * specularLightWeighting
                 + diffuseColor * diffuseLightWeighting;
 
-        gl_FragColor = vec4(color*vLightWeighting*lightWeighting, 1.0);
+        gl_FragColor = vec4(vLightWeighting*lightWeighting, 1.0);
+        // gl_FragColor = vec4(color*vLightWeighting*lightWeighting, 1.0);
     }
 
 </script>

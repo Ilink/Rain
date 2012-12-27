@@ -29,7 +29,7 @@ function SpriteRenderer(gl, shaders, textures){
             mat4.translate(mvMatrix, geo.trans);
             // mat4.rotate(mvMatrix, 40, [0,0,1], mvMatrix);
 
-            self.__setDefaultUniforms(self.shaderProgram, pMatrix, mvMatrix, dim);
+            self.setDefaultUniforms(self.shaderProgram, pMatrix, mvMatrix, dim);
 
             // Textures
             if(typeof geo.texture !== 'undefined'){

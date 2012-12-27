@@ -176,15 +176,6 @@ var geoPresets = {
         ];
 
         var normals = calcFaceNormals(indexes, verts);
-        console.log('correct lengths: ', indexes.length, verts.length);
-
-        // just me testing against a known set of indexes
-        var faceIndexes = [];
-        for(var i = 0; i < verts.length/3; i+=4){
-            faceIndexes.push(i,i+1,i+2);
-            faceIndexes.push(i,i+2,i+3);
-        }
-        // console.log(faceIndexes, indexes);
 
         return {
             verts: verts,

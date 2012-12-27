@@ -23,7 +23,7 @@ function RendererBase(args){
 
 // todo refctor, doing it this way is really slow
 // should store the values of the uniform locations, not fetch them here
-RendererBase.prototype.__setDefaultUniforms = function(program, pMatrix, mvMatrix, dim){
+RendererBase.prototype.setDefaultUniforms = function(program, pMatrix, mvMatrix, dim){
     this.gl.uniform2f(this.resolution, dim.width, dim.height);
     this.gl.uniformMatrix4fv(this.uPMatrix, false, pMatrix);
     this.gl.uniformMatrix4fv(this.uMVMatrix, false, mvMatrix);
