@@ -8,9 +8,9 @@ Displays the texture on a fullscreen quad
 
 function Rtt(texture, sampler, attr){
 	var self = this;
-	// var quad = new Geo(gl, geo_builder.fullScreenQuad);
-	// var quad = new Buffer(gl, geo_builder.fullScreenQuad, 3, attr);
-	var quadBuffer = makeGeoBuffer(geo_builder.fullScreenQuad, 3);
+	// var quad = new Geo(gl, geoPresets.fullScreenQuad);
+	// var quad = new Buffer(gl, geoPresets.fullScreenQuad, 3, attr);
+	var quadBuffer = makeGeoBuffer(geoPresets.fullScreenQuad, 3);
 
 	var UVcoords = [
 	    0.0, 0.0,

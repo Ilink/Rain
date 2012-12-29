@@ -85,7 +85,7 @@ function RainRenderer(gl, shaders, rttShaders){
 
     setup_main_shader();
     setup_rtt_shader();
-    var rtt = new Sprite(fbo.glTexture, geo_builder.fullScreenQuad, rttShaderInputs.sampler, rttShaderInputs.textureCoord, rttShaderInputs.position);
+    var rtt = new Sprite(fbo.glTexture, geoPresets.fullScreenQuad, rttShaderInputs.sampler, rttShaderInputs.textureCoord, rttShaderInputs.position);
     var blurResult = new Texture(fbo.glTexture, laserShaderInputs.blurSampler, vertColor);
 
     this.render = function(time, dim, pMatrix, pMatrixInv) {

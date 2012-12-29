@@ -94,7 +94,7 @@ $(document).ready(function(){
         // engine.add_renderer(squid_renderer);
         // tmat = [-1.5, -2.0, -7.0];
         // var squid_sprite = squid_renderer.addGeo(
-        //     geo_builder.rectangle(1.0, 1.0), 
+        //     geoPresets.rectangle(1.0, 1.0), 
         //     tmat, 
         //     'squid_large.png'
         // );
@@ -126,8 +126,8 @@ $(document).ready(function(){
         //     z = fit_bound(z_rand, 0, 1, z_min, z_max);
             
         //     tmat = [x, boundaries.topleft[1], z];
-        //     // var _geo = rainRenderer.add_geo(geo_builder.rectangle(0.008, 0.09), tmat);
-        //     var _geo = rainRenderer.addGeo(geo_builder.rectangle(0.02, 0.8), tmat);
+        //     // var _geo = rainRenderer.add_geo(geoPresets.rectangle(0.008, 0.09), tmat);
+        //     var _geo = rainRenderer.addGeo(geoPresets.rectangle(0.02, 0.8), tmat);
 
         //     _geo.vel = Math.random()/150.0 + 0.0001;
         //     geo_arr.push(_geo);

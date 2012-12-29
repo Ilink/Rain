@@ -28,7 +28,7 @@ RendererBase.prototype.setDefaultUniforms = function(program, pMatrix, mvMatrix,
     this.gl.uniformMatrix4fv(this.uPMatrix, false, pMatrix);
     this.gl.uniformMatrix4fv(this.uMVMatrix, false, mvMatrix);
     this.gl.uniform1i(this.uSampler, 1);
-}
+};
 
 RendererBase.prototype.addGeo = function(verts, mat, textureName){
     var self = this;
@@ -40,10 +40,24 @@ RendererBase.prototype.addGeo = function(verts, mat, textureName){
     }
     this.geo.push(geo);
     return geo;
-}
+};
 
+// this should be on the camera, not here.
 RendererBase.prototype.setFromCamera = function(mvMatrix, xforms){
-    mat4.rotate(mvMatrix, degToRad(-xforms.pitch), [1, 0, 0]);
-    mat4.rotate(mvMatrix, degToRad(-xforms.yaw), [0, 1, 0]);
-    mat4.translate(mvMatrix, [xforms.x, xforms.y, xforms.z]);
-}
+    var trans = vec3.create(xforms.x, xforms.y, xforms.z),
+        // camRot = mat3.create(),
+        camRot = vec3.normalize(vec3.create([-xforms.yaw, -xforms.pitch, -1.0])),
+        pos = vec3.create();
+
+    mat4.rotate(mvMatrix, degToRad(xforms.pitch), [1, 0, 0]);
+    mat4.rotate(mvMatrix, degToRad(xforms.yaw), [0, 1, 0]);
+    // mat4.toMat3(mvMatrix, camRot);
+
+    // mat3.multiplyVec3(camRot, [1,1,1], pos);
+    // vec3.normalize(pos);
+    vec3.add(camRot, [xforms.x, xforms.y, xforms.z]);
+
+    mat4.translate(mvMatrix, vec3.scale(camRot,10));
+};
+
+RendererBase.prototype.toViewSpace = RendererBase.prototype.setFromCamera; // alias

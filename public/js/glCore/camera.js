@@ -14,7 +14,7 @@ function Camera(){
 		x: 1,
 		y: 1,
 		z: 1,
-		mouse: 0.01
+		mouse: 0.05
 	};
 
 	var prevMousePos = {
@@ -42,7 +42,7 @@ function Camera(){
 		$document.mousemove(function(e){
 			self.xforms.yaw += (e.screenX - prevMousePos.x) * self.speed.mouse;
 			self.xforms.pitch += (e.screenY - prevMousePos.y) * self.speed.mouse;
-			
+
 			prevMousePos.x = e.screenX;
 			prevMousePos.y = e.screenY;
 		});

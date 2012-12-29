@@ -27,13 +27,8 @@ function Engine(canvas){
     var boundaries;
     canvas = canvas[0];
 
-    // window.camera = new Camera();
     var camera = new Camera();
     camera.bindControls();
-
-    function to_clip_space(){
-        // implement me!
-    }
 
     function resize_viewport( canvas ) {
         canvas.width = $(window).width()-4;
@@ -108,12 +103,6 @@ function Engine(canvas){
             var result = vec4.create();
             mat4.multiply(trans_result, topleft, result);
             boundaries.topleft = result;
-            
-            // result = vec3.create();
-            // mat4.multiplyVec3(trans_result, botright, result);
-            // boundaries.botright = result;
-            console.log(tmat, trans_result, result);
-
         } else {
             var result = vec3.create();
             mat4.multiplyVec3(pMatrixInv, topleft, result);

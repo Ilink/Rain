@@ -6,7 +6,6 @@ var b = vec3.create([0,1,0]);
 var angleBetween = getAngle(a,b);
 // console.log("angle between", angleBetween);
 
-var rect = geo_builder.rectangle_gradient;
 var rect = geoPresets.rectangle;
 rect = $.extend(rect, {});
 console.log('using rect:', rect);
