@@ -148,7 +148,7 @@ var geoPresets = {
             -1.0,  0.0,  0.0
         ];
 
-        var normals = calcFaceNormals(indexes, verts);
+        // var normals = calcFaceNormals(indexes, verts);
 
         return {
             verts: verts,

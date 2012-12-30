@@ -83,10 +83,9 @@ function calculateSimpleNormalAvg(vertSet){
 	$.each(vertSet, function(i, vert){
 		var total = vec3.create();
 		vert.normal = vec3.create();
-		vec3.add(vert.normals[0], total, total);
-		// $.each(vert.normals, function(i, normal){
-		// 	vec3.add(normal, total, total);
-		// });
+		$.each(vert.normals, function(i, normal){
+			vec3.add(normal, total, total);
+		});
 		// note this is component-wise division
 		vec3.scale(total, 1.0/vert.normals.length, vert.normal);
 	});

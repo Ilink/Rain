@@ -28,7 +28,7 @@ function Engine(canvas){
     canvas = canvas[0];
 
     var camera = new Camera();
-    // camera.bindControls();
+    camera.bindControls();
 
     function resize_viewport( canvas ) {
         canvas.width = $(window).width()-4;
