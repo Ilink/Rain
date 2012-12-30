@@ -83,9 +83,10 @@ function calculateSimpleNormalAvg(vertSet){
 	$.each(vertSet, function(i, vert){
 		var total = vec3.create();
 		vert.normal = vec3.create();
-		$.each(vert.normals, function(i, normal){
-			vec3.add(normal, total, total);
-		});
+		vec3.add(vert.normals[0], total, total);
+		// $.each(vert.normals, function(i, normal){
+		// 	vec3.add(normal, total, total);
+		// });
 		// note this is component-wise division
 		vec3.scale(total, 1.0/vert.normals.length, vert.normal);
 	});
@@ -130,46 +131,6 @@ function assignVertProperties(vertSet, vertIndex, faceIndex, normal){
 			currentVert.normals.push(normal);
 		}
 	}
-}
-
-// deprecateddddddddd
-// going to use indexed triangles instead
-function _old_calcFaceNormals(verts){
-	var vecA = vec3.create();
-	var vecB = vec3.create();
-	var vecC = vec3.create();
-	var normal = vec3.create();
-	var faces = [];
-
-	/*
-	i recommend looking at a picture of a triangle strip
-	This is for clockwise winding. Not sure if that's right? Should I be using ccw?
-
-	lets switch this whole thing to use indexed triangles instead
-	*/
-
-	for(var i = 6; i < verts.length; i+=6){
-
-		if(i+6 < verts.length){
-			vecA.set([verts[i], verts[i+1], verts[i+2]]);
-			vecB.set([verts[i+3], verts[i+4], verts[i+5]]);
-			vecC.set([verts[i+6], verts[i+7], verts[i+8]]);
-
-			vec3.cross(vecA, vecB, normal);
-			vec3.normalize(normal, normal);
-			faces.push(normal);
-		} else throw "not enough verts";
-
-		vecA.set([verts[i], verts[i+1], verts[i+2]]);
-		vecB.set([verts[i-3], verts[i-2], verts[i-1]]);
-		vecC.set([verts[i+3], verts[i+4], verts[i+5]]);
-
-		vec3.cross(vecA, vecB, normal);
-		vec3.normalize(normal, normal);
-
-		faces.push(normal);
-	}
-	return faces;
 }
 
 function getNeighborFaces(i, faces){

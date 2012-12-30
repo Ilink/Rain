@@ -182,3 +182,71 @@ var geoPresets = {
         return verts;
     }
 };
+
+function Box(width, height, depth){
+    // if only one param is passed, it becomes a cube
+    if(typeof height === 'undefined' && typeof depth === 'undefined'){
+        var height = width;
+        var depth = width;
+    }
+    
+    var verts = [
+        // Front face
+        0.0, 0.0,  depth,
+        width, 0.0,  depth,
+        width,  height,  depth,
+        0.0,  height,  depth,
+        
+        // Back face
+        0.0, 0.0, 0.0,
+        0.0,  height, 0.0,
+        width,  height, 0.0,
+        width, 0.0, 0.0,
+
+        // Top face
+        0.0, height, 0.0,
+        0.0, height,  depth,
+        width, height,  depth,
+        width, height, 0.0,
+
+        // Bottom face
+        0.0, 0.0, 0.0,
+        width, 0.0, 0.0,
+        width, 0.0,  depth,
+        0.0, 0.0,  depth,
+
+        // Right face
+        width, 0.0, 0.0,
+        width, height, 0.0,
+        width, height,  depth,
+        width, 0.0,  depth,
+
+        // Left face
+        0.0, 0.0, 0.0,
+        0.0, 0.0,  depth,
+        0.0,  height,  depth,
+        0.0,  height, 0.0,
+    ];
+
+    var indexes = [
+        0,1,2,      0,2,3,      // front
+        4,5,6,      4,6,7,      // back
+        8,9,10,     8,10,11,    // top
+        12,13,14,   12,14,15,   // bottom
+        16,17,18,   16,18,19,   // right
+        20,21,22,   20,22,23    // left
+    ];
+
+    var normals = calcFaceNormals(indexes, verts);
+    
+    // verts: verts,
+    // indexes: indexes,
+    // vertsBuffer: makeGeoBuffer(verts, 3),
+    // indexesBuffer: makeIndexBuffer(indexes, 3),
+    // normalsBuffer: makeGeoBuffer(normals, 3),
+    // normals: normals
+        
+    this.draw = function(normalUni, positionAttr){
+
+    };
+}
