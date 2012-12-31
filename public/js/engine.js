@@ -65,7 +65,7 @@ function Engine(canvas){
         
         $(document).trigger('engineTick', [parameters.time, 
                 {width: screenWidth, height: screenHeight}, 
-                pMatrix, pMatrixInv, camera.xforms]);
+                pMatrix, pMatrixInv, camera.viewMatrix]);
     });
 
     this.start = function(){

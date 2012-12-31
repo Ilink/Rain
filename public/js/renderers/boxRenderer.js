@@ -35,10 +35,11 @@ function BoxRenderer(shaders, textures){
     
     setup_shaders();
 
-    function build(dim, pMatrix, pMatrixInv, cameraXforms){
+    function build(dim, pMatrix, pMatrixInv, viewMatrix){
         mat4.identity(mvMatrix);
-        self.setFromCamera(mvMatrix, cameraXforms);
-        mat4.translate(mvMatrix, [0,0,-6], mvMatrix);
+        var test = mat4.create();
+        mat4.translate(mvMatrix, [-10,0,-10], mvMatrix);
+        mat4.multiply(mvMatrix, viewMatrix);
         currentRot += rotAngle;
         // mat4.rotate(mvMatrix, currentRot, [0,1,0], mvMatrix);
         self.setDefaultUniforms(self.shaderProgram, pMatrix, mvMatrix, dim);
@@ -60,15 +61,15 @@ function BoxRenderer(shaders, textures){
         gl.drawElements(gl.TRIANGLES, numTris, gl.UNSIGNED_SHORT, 0);
     }
 
-    this.render = function(time, dim, pMatrix, pMatrixInv, cameraXforms) {
+    this.render = function(time, dim, pMatrix, pMatrixInv, viewMatrix) {
         gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-        build(dim, pMatrix, pMatrixInv, cameraXforms);
+        build(dim, pMatrix, pMatrixInv, viewMatrix);
     };
 
-    $(document).on('engineTick', function(e, time, dim, pMatrix, pMatrixInv, cameraXforms){
+    $(document).on('engineTick', function(e, time, dim, pMatrix, pMatrixInv, viewMatrix){
         gl.useProgram(self.shaderProgram);
 
-        self.render(time, dim, pMatrix, pMatrixInv, cameraXforms);
+        self.render(time, dim, pMatrix, pMatrixInv, viewMatrix);
     });
 }
 
