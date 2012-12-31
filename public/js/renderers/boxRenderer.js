@@ -27,10 +27,10 @@ function BoxRenderer(shaders, textures){
         gl.enableVertexAttribArray(vertexNormal);
     }
 
-    var cube = geoPresets.box(10,10,1);
     var sphere = geoPresets.sphere(1,2,2);
     var terrain = new Terrain({yDim:90, xDim: 90});
     var numTris = terrain.faces.length/3;
+    var box = new Box(5);
     // numTris = 36;
     
     setup_shaders();
@@ -51,14 +51,8 @@ function BoxRenderer(shaders, textures){
         mat3.transpose(normalMatrix);
         gl.uniformMatrix3fv(normalMatrixU, false, normalMatrix);
 
-        gl.bindBuffer(gl.ARRAY_BUFFER, terrain.normalsBuffer.glBuffer);
-        gl.vertexAttribPointer(vertexNormal, 3, gl.FLOAT, false, 0, 0);
-
-        gl.bindBuffer(gl.ARRAY_BUFFER, terrain.vertsBuffer.glBuffer);
-        gl.vertexAttribPointer(position, 3, gl.FLOAT, false, 0, 0);
-
-        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, terrain.indexesBuffer.glBuffer);
-        gl.drawElements(gl.TRIANGLES, numTris, gl.UNSIGNED_SHORT, 0);
+        box.draw(vertexNormal, position);
+        terrain.draw(vertexNormal, position);
     }
 
     this.render = function(time, dim, pMatrix, pMatrixInv, viewMatrix) {

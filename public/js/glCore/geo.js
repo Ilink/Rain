@@ -238,15 +238,19 @@ function Box(width, height, depth){
     ];
 
     var normals = calcFaceNormals(indexes, verts);
-    
-    // verts: verts,
-    // indexes: indexes,
-    // vertsBuffer: makeGeoBuffer(verts, 3),
-    // indexesBuffer: makeIndexBuffer(indexes, 3),
-    // normalsBuffer: makeGeoBuffer(normals, 3),
-    // normals: normals
+    var normalsBuffer = makeGeoBuffer(normals, 3);
+    var indexesBuffer = makeIndexBuffer(indexes, 3);
+    var vertsBuffer = makeGeoBuffer(verts, 3);
+    var numTris = 36;
         
     this.draw = function(normalUni, positionAttr){
+        gl.bindBuffer(gl.ARRAY_BUFFER, normalsBuffer.glBuffer);
+        gl.vertexAttribPointer(normalUni, 3, gl.FLOAT, false, 0, 0);
 
+        gl.bindBuffer(gl.ARRAY_BUFFER, vertsBuffer.glBuffer);
+        gl.vertexAttribPointer(positionAttr, 3, gl.FLOAT, false, 0, 0);
+
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexesBuffer.glBuffer);
+        gl.drawElements(gl.TRIANGLES, numTris, gl.UNSIGNED_SHORT, 0);
     };
 }
