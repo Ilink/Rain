@@ -38,7 +38,7 @@ function BoxRenderer(shaders, textures){
     function build(dim, pMatrix, pMatrixInv, viewMatrix){
         mat4.identity(mvMatrix);
         var test = mat4.create();
-        mat4.translate(mvMatrix, [-10,0,-10], mvMatrix);
+        // mat4.translate(mvMatrix, [-10,0,-10], mvMatrix);
         mat4.multiply(mvMatrix, viewMatrix);
         currentRot += rotAngle;
         // mat4.rotate(mvMatrix, currentRot, [0,1,0], mvMatrix);
