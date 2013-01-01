@@ -51,23 +51,20 @@ function Camera(){
 		self.viewMatrix = mat4.lookAt(eyePoint, lookAtPoint, upVector);
 	}
 
-	// old
-	// function otherRotate(){
-	// 	var trans = vec3.create(xforms.x, xforms.y, xforms.z),
-	// 	    // camRot = mat3.create(),
-	// 	    camRot = vec3.normalize(vec3.create([-xforms.yaw, -xforms.pitch, -1.0])),
-	// 	    pos = vec3.create();
+	function strafe(x){
+		var frontDirection = vec3.create();
+		var strafeDirection = vec3.create();
+		vec3.subtract(lookAtPoint, eyePoint, frontDirection);
+		vec3.normalize(frontDirection);
 
-	// 	mat4.rotate(mvMatrix, degToRad(xforms.pitch), [1, 0, 0]);
-	// 	mat4.rotate(mvMatrix, degToRad(xforms.yaw), [0, 1, 0]);
-	// 	// mat4.toMat3(mvMatrix, camRot);
+		vec3.cross(frontDirection, upVector, strafeDirection);
+		vec3.normalize(strafeDirection);
 
-	// 	// mat3.multiplyVec3(camRot, [1,1,1], pos);
-	// 	// vec3.normalize(pos);
-	// 	vec3.add(camRot, [xforms.x, xforms.y, xforms.z]);
-
-	// 	mat4.translate(mvMatrix, vec3.scale(camRot,10));
-	// }
+		vec3.scale(strafeDirection, x);
+		vec3.add(eyePoint, strafeDirection);
+		vec3.add(lookAtPoint, strafeDirection);
+		self.viewMatrix = mat4.lookAt(eyePoint, lookAtPoint, upVector);
+	}
 
 	this.bindControls = function(){
 		jwerty.key('up/w', function(){
@@ -82,11 +79,12 @@ function Camera(){
 
 		jwerty.key('left/a', function(){
 			self.xforms.x += self.speed.x;
+			strafe(-1);
 		});
 
 		jwerty.key('right/d', function(){
 			self.xforms.x -= self.speed.x;
-			
+			strafe(1);
 		});
 
 		$(document).on('draginit', function(e){
