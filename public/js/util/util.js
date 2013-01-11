@@ -22,3 +22,17 @@ function buildArray(size){
 function degToRad(deg){
 	return deg * Math.PI / 180;
 }
+
+/*
+Returns all the verts represented by a specified triangle index. 
+*/
+function triIndexIter(verts, triIndex, cb){
+	var i;
+	for(i = 0; i < triIndex.length; i += 3){
+		cb.call(this, i,
+				verts[triIndex[i]], verts[triIndex[i]+1], verts[triIndex[i]+2],
+				verts[triIndex[i+1]], verts[triIndex[i+1]+1], verts[triIndex[i+1]+2],
+				verts[triIndex[i+2]], verts[triIndex[i+2]+1], verts[triIndex[i+2]+2]
+		);
+	}
+}
