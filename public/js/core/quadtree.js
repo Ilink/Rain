@@ -48,7 +48,7 @@ function Quadtree(verts, faces, width, height, x, y){
 			x: node.x,
 			y: node.y / 2
 		};
-		
+
 		if(node.contents !== undefined || node.contents.length > 0) {
 			// we need to relocate the contents to one of these children, because we have a more specific location now
 			moveContents(node);
@@ -57,13 +57,14 @@ function Quadtree(verts, faces, width, height, x, y){
 
 	function moveContents(node){
 		var x,y,z, contents = node.contents.slice();
-		node.contents = [];
+		
 		for(var i = 0; i < contents.length; i+=3){
 			x = contents[i];
 			y = contents[i+1];
 			z = contents[i+2];
 			insertIntoChildren(node, x, y, z);
 		}
+		node.contents = [];
 	}
 
 	function insertIntoChildren(node, x, y, z){
@@ -95,6 +96,7 @@ function Quadtree(verts, faces, width, height, x, y){
 		center.z = z;
 	}
 
+	// somehow not moving down the tree properly
 	function insert(node, x, y, z){
 		if(x <= width+node.x && x >= node.x && y <= height+node.y && y >= node.y){
 			if(node.nw === undefined){ // try to traverse lower first
@@ -105,8 +107,10 @@ function Quadtree(verts, faces, width, height, x, y){
 					node.contents.push(x,y,z);
 					return true;
 				} else {
+					// these are getting hit into a recursive loop
 					subdivide(node);
 					insertIntoChildren(node, x, y, z);
+					return false;
 				}
 			} else {
 				insertIntoChildren(node, x, y, z);
