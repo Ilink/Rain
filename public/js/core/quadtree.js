@@ -22,12 +22,23 @@ function Quadtree(_verts, _faces, width, height, centerX, centerY){
 	*/
 
 	function subdivide(node){
-		var oldContents = node.contents;
+		moveContents(node);
 		node.nw = {};
 		node.ne = {};
 		node.se = {};
 		node.sw = {};
 		// do stuff with boundaries too
+	}
+
+	function moveContents(node){
+		/*
+		iterate through node contents via vertex iter
+			try to insert into each child:
+				if(insert(node.nw, x,y,z)) return true;
+				if(insert(node.ne, x,y,z)) return true;
+				if(insert(node.se, x,y,z)) return true;
+				if(insert(node.sw, x,y,z)) return true;
+		*/
 	}
 
 	function getCenter(center, a0, a1, a2, b0, b1, b2, c0, c1, c2){
@@ -62,7 +73,7 @@ function Quadtree(_verts, _faces, width, height, centerX, centerY){
 			}
 		}
 		return false;
-		
+
 		/*
 		if(xyz is within node boundaries)
 			if(contents not full)
