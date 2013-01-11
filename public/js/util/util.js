@@ -29,10 +29,10 @@ Returns all the verts represented by a specified triangle index.
 function triIndexIter(verts, triIndex, cb){
 	var i;
 	for(i = 0; i < triIndex.length; i += 3){
-		cb.call(this, i,
-				verts[triIndex[i]], verts[triIndex[i]+1], verts[triIndex[i]+2],
-				verts[triIndex[i+1]], verts[triIndex[i+1]+1], verts[triIndex[i+1]+2],
-				verts[triIndex[i+2]], verts[triIndex[i+2]+1], verts[triIndex[i+2]+2]
+		cb.call(this, i/3,
+				verts[triIndex[i]*3], verts[triIndex[i]*3+1], verts[triIndex[i]*3+2],
+				verts[triIndex[i+1]*3], verts[triIndex[i+1]*3+1], verts[triIndex[i+1]*3+2],
+				verts[triIndex[i+2]*3], verts[triIndex[i+2]*3+1], verts[triIndex[i+2]*3+2]
 		);
 	}
 }

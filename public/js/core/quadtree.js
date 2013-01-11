@@ -1,14 +1,16 @@
-function Quadtree(_verts, _faces, width, height, centerX, centerY){
+function Quadtree(verts, faces, width, height, x, y){
 	// var verts = _verts.slice();
 	// var faces = _faces.slice();
 	var center = {}; // used in getCenter operations
-	var root = {
+	this.root = {
 		width: width,
 		height: height,
-		centerX: x,
-		centerY: y
+		x: x,
+		y: y
 	};
 	var maxPerNode = 1;
+	maxPerNode *= 3; // size of a point
+	var self = this;
 
 	/*
 	var node = {
@@ -22,23 +24,52 @@ function Quadtree(_verts, _faces, width, height, centerX, centerY){
 	*/
 
 	function subdivide(node){
+		node.nw = {
+			width: node.width / 2,
+			height: node.height / 2,
+			x: node.x,
+			y: node.y
+		};
+		node.ne = {
+			width: node.width / 2,
+			height: node.height / 2,
+			x: node.width / 2,
+			y: node.y
+		};
+		node.se = {
+			width: node.width / 2,
+			height: node.height / 2,
+			x: node.width / 2,
+			y: node.y
+		};
+		node.sw = {
+			width: node.width / 2,
+			height: node.height / 2,
+			x: node.x,
+			y: node.y / 2
+		};
+		// we need to relocate the contents to one of these children, because we have a more specific location now
 		moveContents(node);
-		node.nw = {};
-		node.ne = {};
-		node.se = {};
-		node.sw = {};
-		// do stuff with boundaries too
 	}
 
 	function moveContents(node){
-		/*
-		iterate through node contents via vertex iter
-			try to insert into each child:
-				if(insert(node.nw, x,y,z)) return true;
-				if(insert(node.ne, x,y,z)) return true;
-				if(insert(node.se, x,y,z)) return true;
-				if(insert(node.sw, x,y,z)) return true;
-		*/
+		var x,y,z;
+		for(var i = 0; i < node.contents.length; i+=3){
+			x = node.contents[i];
+			y = node.contents[i+1];
+			z = node.contents[i+2];
+			// insertIntoChildren(node, x, y, z);
+			insert(node, x, y, z);
+		}
+	}
+
+	function insertIntoChildren(node, x, y, z){
+		var inserted = false;
+		if(insert(node.nw, x,y,z)) inserted = true;
+		if(!inserted && insert(node.ne, x,y,z)) inserted = true;
+		if(!inserted && insert(node.se, x,y,z)) inserted = true;
+		if(!inserted && insert(node.sw, x,y,z)) inserted = true;
+		if(!inserted) console.error("cannot insert into any child of: ", node);
 	}
 
 	function getCenter(center, a0, a1, a2, b0, b1, b2, c0, c1, c2){
@@ -56,24 +87,30 @@ function Quadtree(_verts, _faces, width, height, centerX, centerY){
 		var y = (midA1 + c1) / 2;
 		var z = (midA2 + c2) / 2;
 
-		return [x,y,z];
+		center.x = x;
+		center.y = y;
+		center.z = z;
 	}
 
 	function insert(node, x, y, z){
-		if(x <= width+node.centerX && x >= node.centerX && y <= height+node.centerY && y >= node.centerY){
-			if(node.contents.length < maxPerNode){
-				node.contents.push(x,y,z);
-				return true;
-			} else if(node.nw === undefined){ // no children, we can subdivide this node for more
-				subdivide(node);
-				if(insert(node.nw, x,y,z)) return true;
-				if(insert(node.ne, x,y,z)) return true;
-				if(insert(node.se, x,y,z)) return true;
-				if(insert(node.sw, x,y,z)) return true;
+		if(x <= width+node.x && x >= node.x && y <= height+node.y && y >= node.y){
+			if(node.nw === undefined){
+				if(node.contents === undefined){
+					node.contents = [];
+				}
+				if(node.contents.length < maxPerNode){
+					node.contents.push(x,y,z);
+					return true;
+				} else {
+					subdivide(node);
+					insertIntoChildren(node, x, y, z);
+				}
+			} else {
+				insertIntoChildren(node, x, y, z);
 			}
+		} else {
+			return false;
 		}
-		return false;
-
 		/*
 		if(xyz is within node boundaries)
 			if(contents not full)
@@ -89,9 +126,10 @@ function Quadtree(_verts, _faces, width, height, centerX, centerY){
 	}
 
 	this.build = function(){
-		triIndexIter(verts, faces, function(a0, a1, a2, b0, b1, b2, c0, c1, c2){
+		triIndexIter(verts, faces, function(i, a0, a1, a2, b0, b1, b2, c0, c1, c2){
+			console.log('triangle ', i);
 			getCenter(center, a0, a1, a2, b0, b1, b2, c0, c1, c2);
-			insert(node, center.x, center.y, center.z);
+			insert(self.root, center.x, center.y, center.z);
 		});
 	}	
 }

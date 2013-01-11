@@ -52,3 +52,19 @@ var noiseMap = noise.noise3d(10,0,1);
 
 // Terrain
 // var terrain = new Terrain({yDim: 2, xDim: 4});
+
+////// qt tests
+var verts = [
+	1, 1, 1,
+	2, 2, 2,
+	3, 3, 3,
+	4, 4, 4
+]
+
+var faces = [
+	0, 1, 2,
+	0, 2, 3
+]
+var qt = new Quadtree(verts, faces, 10, 10, 0, 0);
+qt.build();
+console.log(qt);
