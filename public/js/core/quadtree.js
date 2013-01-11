@@ -48,18 +48,21 @@ function Quadtree(verts, faces, width, height, x, y){
 			x: node.x,
 			y: node.y / 2
 		};
-		// we need to relocate the contents to one of these children, because we have a more specific location now
-		moveContents(node);
+		
+		if(node.contents !== undefined || node.contents.length > 0) {
+			// we need to relocate the contents to one of these children, because we have a more specific location now
+			moveContents(node);
+		}
 	}
 
 	function moveContents(node){
 		var x,y,z, contents = node.contents.slice();
-		node.contents = undefined;
-		for(var i = 0; i < contents; i+=3){
+		node.contents = [];
+		for(var i = 0; i < contents.length; i+=3){
 			x = contents[i];
 			y = contents[i+1];
 			z = contents[i+2];
-			insert(node, x, y, z);
+			insertIntoChildren(node, x, y, z);
 		}
 	}
 
@@ -94,7 +97,7 @@ function Quadtree(verts, faces, width, height, x, y){
 
 	function insert(node, x, y, z){
 		if(x <= width+node.x && x >= node.x && y <= height+node.y && y >= node.y){
-			if(node.nw === undefined){ 
+			if(node.nw === undefined){ // try to traverse lower first
 				if(node.contents === undefined){
 					node.contents = [];
 				}
@@ -105,7 +108,7 @@ function Quadtree(verts, faces, width, height, x, y){
 					subdivide(node);
 					insertIntoChildren(node, x, y, z);
 				}
-			} else { // try to traverse lower first
+			} else {
 				insertIntoChildren(node, x, y, z);
 			}
 		} else {
