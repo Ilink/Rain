@@ -22,16 +22,15 @@ function Terrain(params){
     var self = this;
     var i, j, h, yDim = params.yDim, xDim = params.xDim;
     var noise = new SimplexNoise();
-    var map = []; // flat because fuck 2d arrays
+    var heightMap = [];
     for(j=0; j < yDim; j++){
         for(i=0; i < xDim; i++){
             h = Math.abs(noise.noise(i,j));
-            map.push(j,h*2,i/2);
+            heightMap.push(j,h*2,i/2);
         }
     }
 
-    // this transforms the heightmap verts into a set of faces
-    function makeFaces(verts, xDim, yDim){
+    function tesselate(verts, xDim, yDim){
         var faces = [];
         var width = xDim * 3;
         var height = yDim * 3;
@@ -53,7 +52,7 @@ function Terrain(params){
         return faces;
     }
 
-    var faces = makeFaces(map, xDim, yDim);
+    var faces = tesselate(heightMap, xDim, yDim);
     var numTris = faces.length/3;
 
     // face indexes for drawing
