@@ -53,7 +53,8 @@ var noiseMap = noise.noise3d(10,0,1);
 // Terrain
 // var terrain = new Terrain({yDim: 2, xDim: 4});
 
-////// qt tests
+// qt tests
+//////////////////////////////////
 var verts = [
 	1, 1, 1,
 	2, 2, 2,
@@ -68,3 +69,9 @@ var faces = [
 var qt = new Quadtree(verts, faces, 10, 10, 0, 0);
 qt.build();
 console.log(qt);
+
+// Sphere sphere intersections
+//////////////////////////////////
+
+console.log("0,0,0 and 1,1,1, radii = 2 :", sphereSphere(2, 2, 0,0,0, 1,1,1));
+console.log("0,0,0 and 3,3,3, radii = 2 :", sphereSphere(2, 2, 0,0,0, 3,3,3));
