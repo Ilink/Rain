@@ -16,6 +16,13 @@ y   |
 I think that is 'easy' to use with opengl...easy to change later
 
 params will have more stuff as I figure out how to actually massage the perlin noise function
+
+
+
+This is generally a two step process:
+    1. Make heightmap
+    2. Rearrnage verts of the heightmap so we can draw with them
+
 */
 
 function Terrain(params){
@@ -30,7 +37,10 @@ function Terrain(params){
         }
     }
 
-    function tesselate(verts, xDim, yDim){
+    // this re-arranges from the grid to a set of triangles
+    // i guess it's like tesselation, but only one step
+    // this produces verts in a nice format to be consumed by a triangle index.
+    function rearrangeGrid(verts, xDim, yDim){
         var faces = [];
         var width = xDim * 3;
         var height = yDim * 3;
@@ -52,16 +62,22 @@ function Terrain(params){
         return faces;
     }
 
-    var faces = tesselate(heightMap, xDim, yDim);
+    var faces = rearrangeGrid(heightMap, xDim, yDim);
     var numTris = faces.length/3;
 
     // face indexes for drawing
     // assembles vertex indexes from the faces, using CCW order
+    // todo: i think i could combine this step with the last and avoid some memory allocations
     var faceIndexes = [];
     for(var i = 0; i < faces.length/3; i+=4){
         faceIndexes.push(i,i+1,i+2);
         faceIndexes.push(i,i+2,i+3);
     }
+
+    var qt = new Quadtree(100, faces, faceIndexes, xDim, yDim, 0, 0);
+    qt.build();
+    qt.traverse();
+    // console.log("terrain qt", qt);
 
     this.faces = faces;
     this.indexes = faceIndexes;

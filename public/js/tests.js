@@ -59,16 +59,45 @@ var verts = [
 	1, 1, 1,
 	2, 2, 2,
 	3, 3, 3,
-	10, 10, 10
+	4, 4, 4,
+
+	10, 10, 10,
+	11, 12, 12,
+	12, 3, 3,
+	4, 4, 4
 ]
 
 var faces = [
 	0, 1, 2,
 	0, 2, 3
 ]
-var qt = new Quadtree(verts, faces, 10, 10, 0, 0);
-qt.build();
-console.log(qt);
+
+function makeTestVertsFaces(numVerts, numQuads){
+	var i, verts = [], faces = [], rand;
+
+	for(i=0; i < numVerts * 3; i+=3){
+		rand = i/3 + Math.random();
+		verts.push(rand, rand+0.1, rand+0.2);
+	}
+
+	for(i=0; i < numQuads*4; i+=4){
+		faces.push(i, i+1, i+2);
+		faces.push(i, i+2, i+3);
+	}
+	
+
+	return {
+		verts: verts,
+		faces: faces
+	}
+}
+
+var testStuff = makeTestVertsFaces(8, 2);
+console.log(testStuff.verts, testStuff.verts.length/3);
+var qt = new Quadtree(1, testStuff.verts, testStuff.faces, 10, 10, 0, 0);
+// qt.build();
+// qt.traverse();
+// console.log(qt);
 
 // Sphere sphere intersections
 //////////////////////////////////
