@@ -18,7 +18,6 @@ function Engine(canvas){
     var pMatrix = mat4.create();
     var pMatrixInv = mat4.create();
     var geometry = [];
-    var renderers = [];
     var position;
     var boundaries = {};
     var gl;
@@ -81,10 +80,6 @@ function Engine(canvas){
 
     this.stop = function(){
         timeline.stop();
-    };
-
-    this.add_renderer = function(renderer){
-        renderers.push(renderer);
     };
 
     this.get_gl = function(){

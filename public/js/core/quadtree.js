@@ -136,6 +136,13 @@ function Quadtree(cellSize, verts, faces, width, height, x, y){
 		return ret;
 	}
 
+	function sphereFits(node, radius, x,y,z){
+		var xFits = radius < node.width/2;
+		var yFits = radius < node.height/2;
+		var boundFits = inBounds(node, x,y,z);
+		return xFits && yFits && boundFits;
+	}
+
 	function insert(node, x, y, z){
 		if(inBounds(node, x, y, z)){
 			if(node.nw === undefined){ // try to traverse lower first
@@ -208,5 +215,61 @@ function Quadtree(cellSize, verts, faces, width, height, x, y){
 			}
 			self.traverse(node.sw);
 		}
+	};
+
+	this.collect = function(node, collection){
+		var args = Array.prototype.slice.call(arguments);
+		if(args.length < 2) {
+			var node = self.root;
+			var collection = args[0];
+		}
+
+		if(node.contents !== undefined){
+			$.each(node.contents, function(i,v){
+				collection.push(v);
+			});
+		}
+		
+		if(node.nw !== undefined){
+			self.collect(node.nw, collection);
+			self.collect(node.ne, collection);
+			self.collect(node.se, collection);
+			self.collect(node.sw, collection);
+		}
 	}
+
+	function _sphereTraverse(node, radius, results, x,y,z){
+		var fit = false;
+		if(node.nw === undefined){
+			return node.contents;
+		} else {
+			if(sphereFits(node.nw, radius, x,y,z)){
+				fit = true;
+				_sphereTraverse(node.nw, radius,results, x,y,z);
+			}
+			if(!fit && sphereFits(node.ne, radius, results, x,y,z)){
+				fit = true;
+				_sphereTraverse(node.ne, radius, results, x,y,z);
+			}
+			if(!fit && sphereFits(node.se, radius, results, x,y,z)){
+				fit = true;
+				_sphereTraverse(node.se, radius,results, x,y,z);
+			}
+			if(!fit && sphereFits(node.sw, radius,results, x,y,z)){
+				fit = true;
+				_sphereTraverse(node.sw, radius, results, x,y,z);
+			}
+			if(!fit){
+				self.collect(node, results);
+				return results;
+			}
+		}
+		return results;
+	}
+
+	// xyz is the center point
+	this.sphereTraverse = function(radius, x,y,z){
+		var results = [];
+		return _sphereTraverse(self.root, radius, results, x,y,z);
+	};
 }

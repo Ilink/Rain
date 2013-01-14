@@ -76,8 +76,15 @@ function Terrain(params){
 
     var qt = new Quadtree(100, faces, faceIndexes, xDim, yDim, 0, 0);
     qt.build();
-    qt.traverse();
-    // console.log("terrain qt", qt);
+    // qt.traverse();
+
+    // sphere camera traversal tests
+    //////////////////////
+    var res = qt.sphereTraverse(0.5, 1,1,1);
+    // var test = [];
+    // var res = qt.collect(qt.root, test);
+    console.log(res);
+
 
     this.faces = faces;
     this.indexes = faceIndexes;

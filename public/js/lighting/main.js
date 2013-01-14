@@ -24,7 +24,6 @@ $(document).ready(function(){
         var boundaries_far = engine.get_boundaries(-10);
 
         var boxRenderer = new BoxRenderer(phongShader);
-        engine.add_renderer(boxRenderer);
 
         engine.start();
     });
