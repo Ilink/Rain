@@ -1,3 +1,10 @@
+/*
+instantiate terrain creator here
+
+moving around in the world needs to be kept track of on this global-ish level
+
+*/
+
 $(document).ready(function(){
 
     var shader_loader = new Shader_loader();
