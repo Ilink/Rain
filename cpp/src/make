@@ -1,0 +1,11 @@
+CC=clang
+BUILD_DIR = ../build
+CFLAGS = -lm
+
+rain: main.o
+	$(CC) -o $(BUILD_DIR)/rain main.o $(CFLAGS)
+
+main.o: main.c
+
+clean: 
+	rm -f ../build/rain main.o
